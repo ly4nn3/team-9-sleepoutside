@@ -21,7 +21,7 @@ export default class ProductDetails {
   }
 
   addToCart() {
-    setLocalStorage("so-cart", this.product);
+    setLocalStorage("so-cart", this.product) || [];
   }
 
   renderProductDetails() {
@@ -29,14 +29,14 @@ export default class ProductDetails {
     
     productElement.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
-      <h2 class="divider">${this.product.Name} - ${this.product.NameWithoutBrand}</h2>
+      <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
         src="${this.product.Image}"
-        alt="${this.product.NameWithoutBrand}"
+        alt="${this.product.Name}"
       />
-      <p class="product-card__price">$${this.product.FinalPrice}</p>
-      <p class="product__color">${this.product.ColorName}</p>
+      <p class="product-card__price">$${this.product.ListPrice}</p>
+      <p class="product__color">${this.product.Colors[0].ColorName}</p>
       <p class="product__description">
         ${this.product.DescriptionHtmlSimple}
       </p>
