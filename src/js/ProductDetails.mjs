@@ -10,10 +10,10 @@ export default class ProductDetails {
   async init() {
     // Fetch product details
     this.product = await this.dataSource.findProductById(this.productId);
-    
+
     // Render product details
     this.renderProductDetails();
-    
+
     // Add event listener for Add to Cart button
     document
       .getElementById("addToCart")
@@ -27,12 +27,12 @@ export default class ProductDetails {
   renderProductDetails() {
     // console.log("About to render product:", this.product);
     const productElement = document.querySelector(".product-detail");
-    
+
     const isNetlify = window.location.hostname.includes('netlify.app');
-    const imagePath = isNetlify 
-      ? `/src${this.product.Image.replace('..', '')}`
+    const imagePath = isNetlify
+      ? this.product.Image.replace('../images', '/images')
       : this.product.Image;
-    
+
     console.log("Original image path:", this.product.Image);
     console.log("Modified image path:", imagePath);
 
