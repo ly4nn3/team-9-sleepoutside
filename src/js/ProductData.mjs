@@ -9,7 +9,12 @@ function convertToJson(res) {
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `../json/${this.category}.json`;
+
+    const isNetlify = window.location.hostname.includes("netlify.app");
+    
+    this.path = isNetlify
+      ? `./json/${this.category}.json`
+      : `../json/${this.category}.json`;
     console.log("Full path:", this.path);
   }
   getData() {
@@ -18,11 +23,7 @@ export default class ProductData {
       .then((data) => data);
   }
   async findProductById(id) {
-    console.log("Searching for ID:", id);
     const products = await this.getData();
-    console.log("All products:", products);
-    const product = products.find((item) => item.Id === id);
-    console.log("Found product:", product);
-    return product;
+    return products.find((item) => item.Id === id);
   }
 }
