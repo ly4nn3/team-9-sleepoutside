@@ -25,10 +25,16 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
-    console.log("About to render product:", this.product);
+    // console.log("About to render product:", this.product);
     const productElement = document.querySelector(".product-detail");
     
-    const imagePath = this.product.Image.replace("../", "/");
+    const isNetlify = window.location.hostname.includes('netlify.app');
+    const imagePath = isNetlify 
+      ? `/src/images/tents/${this.product.Image.split('/').pop()}`
+      : this.product.Image;
+    
+    console.log("Original image path:", this.product.Image);
+    console.log("Modified image path:", imagePath);
 
     productElement.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
