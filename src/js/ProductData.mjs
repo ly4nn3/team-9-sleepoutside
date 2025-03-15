@@ -13,18 +13,7 @@ export default class ProductData {
     this.category = category;
   }
   async getData() {
-    const isNetlify = window.location.hostname.includes('netlify.app');
-    
-    const products = tentsData.map(item => {
-      if (isNetlify) {
-        return {
-          ...item,
-          Image: item.Image.replace('../', '/src/')
-        };
-      }
-      return item;
-    });
-    return products;
+    return tentsData;
   }
   async findProductById(id) {
     const products = await this.getData();

@@ -28,16 +28,12 @@ export default class ProductDetails {
     // console.log("About to render product:", this.product);
     const productElement = document.querySelector(".product-detail");
 
-    const imagePath = this.product.Image;
-
-    console.log("Using image path:", imagePath);
-
     productElement.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
-        src="${imagePath}"
+        src="${this.product.Image}"
         alt="${this.product.Name}"
       />
       <p class="product-card__price">$${this.product.ListPrice}</p>
