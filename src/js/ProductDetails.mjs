@@ -21,7 +21,7 @@ export default class ProductDetails {
   }
 
   addToCart() {
-    setLocalStorage("so-cart", this.product) || [];
+    setLocalStorage(this.product.Id, this.product) || [];
   }
 
   renderProductDetails() {
