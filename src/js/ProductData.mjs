@@ -1,4 +1,4 @@
-import tentsData from '../json/tents.json';
+import tentsData from "../json/tents.json";
 
 function convertToJson(res) {
   if (res.ok) {
