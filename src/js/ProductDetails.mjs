@@ -25,6 +25,7 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
+    console.log("About to render product:", this.product);
     const productElement = document.querySelector('.product-detail');
     
     productElement.innerHTML = `
