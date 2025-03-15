@@ -1,4 +1,4 @@
-import { setLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -22,9 +22,9 @@ export default class ProductDetails {
 
   addToCart() {
     const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-      // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+      console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
       currentCartItems.push(this.product); // add product to current cart array.
-      // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+      console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
       setLocalStorage("so-cart", currentCartItems); // store current cart array.
   }
 

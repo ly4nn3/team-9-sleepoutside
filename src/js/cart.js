@@ -2,12 +2,13 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-  // console.log(cartItems);  // for debugging purpose
+  console.log(cartItems);  // for debugging purpose
 
   // get product list element
   const productListElement = document.querySelector(".product-list");
 
   // render cart items or display empty
+  console.log(cartItems.length);
   if (cartItems.length > 0) {
     // render cart items
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
