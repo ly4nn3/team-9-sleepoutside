@@ -1,12 +1,22 @@
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-  //asks for all the objects in the localStorage and returns an array (or array like object) so htmlItems can iterate over it.
-  //If there isn't and item in localStorage, the array is returned empty.
-  const cartItems = Object.keys(localStorage).map(key => getLocalStorage(key))
-  
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
+  console.log(cartItems);  // for debugging purpose
+
+  // get product list element
+  const productListElement = document.querySelector(".product-list");
+
+  // render cart items or display empty
+  console.log(cartItems.length);
+  if (cartItems.length > 0) {
+    // render cart items
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    productListElement.innerHTML = htmlItems.join("");  
+  } else {
+    // display empty
+    productListElement.innerHTML = cartEmptyTemplate();
+  }
 }
 
 function cartItemTemplate(item) {
@@ -26,6 +36,15 @@ function cartItemTemplate(item) {
 </li>`;
 
   return newItem;
+}
+
+// display empty cart
+function cartEmptyTemplate() {
+  const empty = `<div class="empty-cart-holder">
+                    <h3>EMPTY CART</h3>
+                    <img src="../images/placeholders/empty-cart.gif" alt="empty-cart" />
+                </div>`;
+  return empty
 }
 
 renderCartContents();
