@@ -26,6 +26,7 @@ export default class ProductDetails {
       currentCartItems.push(this.product); // add product to current cart array.
       console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
       setLocalStorage("so-cart", currentCartItems); // store current cart array.
+      updateCartCount();
   }
   
   renderProductDetails(selector) {

@@ -9,7 +9,7 @@ export default class ProductList {
     
     async init() {
         const list = await this.dataSource.getData();
-        this.render(list);
+        this.renderList(list);
     }
     renderList(list) {
         renderListWithTemplate(productCardTemplate, this.listElement, list, "beforeend", true);

@@ -37,3 +37,25 @@ export function renderListWithTemplate(
     }
     parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function getCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  return cartItems.length;
+}
+
+export function updateCartCount() {
+  const cartCount = getCartCount();
+  const cartElement = document.querySelector(".cart");
+
+  const hasCount = cartElement.querySelector(".cart-count");
+  if (hasCount) {
+    existingCount.remove();
+  }
+
+  if (cartCount > 0) {
+    const countSpan = document.createElement("span");
+    countSpan.className = "cart-count";
+    countSpan.textContent = cartCount;
+    cartElement.appendChild(countSpan);
+  }
+}
