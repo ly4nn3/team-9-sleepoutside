@@ -14,8 +14,7 @@ export default class ProductData {
     
     if (isNetlify) {
       // for Netlify
-      const baseURL = window.location.origin;
-      this.path = `${baseURL}/json/${this.category}.json`;
+      this.path = `/src/json/${this.category}.json`;
     } else {
       // for localhost
       this.path = `../json/${this.category}.json`;
