@@ -30,7 +30,7 @@ export default class ProductDetails {
     
     const isNetlify = window.location.hostname.includes('netlify.app');
     const imagePath = isNetlify 
-      ? `/src/images/tents/${this.product.Image.split('/').pop()}`
+      ? this.product.Image.replace("../", "/")
       : this.product.Image;
     
     console.log("Original image path:", this.product.Image);
