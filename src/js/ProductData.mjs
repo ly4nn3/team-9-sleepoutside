@@ -12,9 +12,14 @@ export default class ProductData {
 
     const isNetlify = window.location.hostname.includes("netlify.app");
     
-    this.path = isNetlify
-      ? `./json/${this.category}.json`
-      : `../json/${this.category}.json`;
+    if (isNetlify) {
+      // for Netlify
+      const baseURL = window.location.origin;
+      this.path = `${baseURL}/json/${this.category}.json`;
+    } else {
+      // for localhost
+      this.path = `../json/${this.category}.json`;
+    }
     console.log("Full path:", this.path);
   }
   getData() {
