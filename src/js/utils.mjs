@@ -65,7 +65,7 @@ export function updateCartCount() {
 
   const hasCount = cartElement.querySelector(".cart-count");
   if (hasCount) {
-    existingCount.remove();
+    hasCount.remove();
   }
 
   if (cartCount > 0) {
