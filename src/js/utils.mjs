@@ -1,4 +1,5 @@
-export function renderListWtihTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+  
   // clear the parent element if clear is true
   clear && (parentElement.innerHTML = "");
 

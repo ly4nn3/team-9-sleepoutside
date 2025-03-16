@@ -1,6 +1,6 @@
-import { renderListWtihTemplate } from "./utils.mjs";
+import { renderListWithTemplate } from "./utils.mjs";
 
-function productCardTemplate(product){
+function productCardTemplate(product) {
     return ` <li class="product-card">
             <a href="product_pages/?product=${product.Id}">
               <img
@@ -9,28 +9,28 @@ function productCardTemplate(product){
               />
               <h3 class="card__brand">${product.Brand.Name}</h3>
               <h2 class="card__name">${product.Name}</h2>
-              <p class="product-card__price">$${product.ListPrice}</p></a
+              <p class="product-card__price">$${product.FinalPrice}</p></a
             >
           </li>`
 }
 
 export default class ProductList {
-    constructor(category, dataSource, listElement){
+    constructor(category, dataSource, listElement) {
         this.category = category;
         this.dataSource = dataSource;
         this.listElement = listElement;
     }
 
-    async init(){
+    async init() {
         //Const because we just need it in this function (const), not in the entire instance (this)
         //Returns a promise, so we need "await".
-        const list  = await this.dataSource.getData();
+        const list = await this.dataSource.getData();
         this.renderList(list);
 
     }
 
-    renderList(list){
-        renderListWtihTemplate(productCardTemplate, this.listElement, list)
+    renderList(list) {
+        renderListWithTemplate(productCardTemplate, this.listElement, list)
     }
 
 }
