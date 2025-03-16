@@ -85,7 +85,7 @@ header {
   margin-top: -1.3em;
 }
 
-.logo--square>div {
+.logo--square > div {
   margin-top: -1.7em;
 }
 
@@ -127,6 +127,20 @@ button {
 }
 
 /* End cart icon styles */
+
+/* Cart count styles */
+.cart-count {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: rgb(224, 105, 35);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+}
 
 .mission {
   padding: 0 0.5em;
