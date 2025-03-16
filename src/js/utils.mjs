@@ -29,13 +29,29 @@ export function getParam(param) {
   return product;
 }
 
-export function renderListWithTemplate(
-  templateFn, parentElement, list, position = "afterbegin", clear = false) {
-    const htmlStrings = list.map(templateFn);
-    if (clear) {
-      parentElement.innerHTML = "";
-    }
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+export function renderListWithTemplate(templateFn, parentElement, listData, position = "afterbegin", clear = false) {
+  // check clear
+  if (clear) parentElement.innerHTML = '';
+
+  // // METHOD 1
+  // // loop through product data;
+  // // call produtCardTemplate to add the generated HTML template created with template literal to productList Element
+  // listData.forEach(data => {
+  //   parentElement.innerHTML += templateFn(data);
+  // });
+
+  // OR
+
+  // // METHOD 2 (using map - array method)
+  // // create a new list modifying product data
+  // // loop through the new list append it to productList element using innerHTML
+  // const modifiedProductList = listData.map(templateFn);
+  // console.log("Modified ProductListData: ", modifiedProductList);  // for testing purpose
+  // modifiedProductList.forEach(data => parentElement.innerHTML += data);
+
+  // METHOD 3
+  // using the insert adjacentHtml document element method and array map method
+  listData.map(templateFn).forEach(dataElement => parentElement.insertAdjacentHTML(position, dataElement));
 }
 
 export function getCartCount() {
