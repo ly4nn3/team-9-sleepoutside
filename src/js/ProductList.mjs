@@ -12,8 +12,8 @@ export default class ProductList {
     // init needed for initial call after instantiating a class
     async init() {
         const productsData = await this.dataSource.getData();  // get product data (a list of product data)
-        console.log('Category: ', this.category);  // for testing purpose
-        console.log(`${this.category} Data: `, productsData);  // for testing purpose
+        // console.log('Category: ', this.category);  // for testing purpose
+        // console.log(`${this.category} Data: `, productsData);  // for testing purpose
         this.renderList(productsData);  // render (display) product on page
     }
 
