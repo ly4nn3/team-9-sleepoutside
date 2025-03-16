@@ -1,3 +1,12 @@
+export function renderListWtihTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+  // clear the parent element if clear is true
+  clear && (parentElement.innerHTML = "");
+
+  const htmlStrings = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+
+}
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
