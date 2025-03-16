@@ -12,7 +12,7 @@ function renderCartContents() {
   if (cartItems.length > 0) {
     // render cart items
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    productListElement.innerHTML = htmlItems.join("");  
+    productListElement.innerHTML = htmlItems.join("");
   } else {
     // display empty
     productListElement.innerHTML = cartEmptyTemplate();
@@ -44,7 +44,7 @@ function cartEmptyTemplate() {
                     <h3>EMPTY CART</h3>
                     <img src="../images/placeholders/empty-cart.gif" alt="empty-cart" />
                 </div>`;
-  return empty
+  return empty;
 }
 
 renderCartContents();
