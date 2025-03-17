@@ -28,7 +28,13 @@ export default class ProductList {
 ************ TEMPLATES *************
 ***********************************/
 function productCardTemplate(product) {
-    const productTemplate = `<li class="product-card">
+
+    let productTemplate = "";
+
+    if (!(product.SuggestedRetailPrice > product.FinalPrice))
+    {
+        //This is the template for products whose Retail Price is the same as the Final Price
+        productTemplate = `<li class="product-card">
                                 <a href="product_pages/?product=${product.Id}">
                                     <img
                                         src="${product.Image}"
@@ -39,5 +45,22 @@ function productCardTemplate(product) {
                                     <p class="product-card__price">$${product.ListPrice}</p>
                                 </a>
                             </li>`;
+    } else {
+        //This is the template for products whose Retail Price is less from the Final Price
+        productTemplate = `<li class="product-card">
+                                <a href="product_pages/?product=${product.Id}">
+                                <div class="discount-label"><span>Discount</span></div>
+                                    <img
+                                        src="${product.Image}"
+                                        alt="${product.Name}"
+                                    />
+                                    <h3 class="card__brand">${product.Brand.Name}</h3>
+                                    <h2 class="card__name">${product.NameWithoutBrand}</h2>
+                                    <small><del>$${product.SuggestedRetailPrice}</del> <span class="discount-price">- Save ${((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100).toFixed(0)}%</span> </small>
+                                    <p class="product-card__price">$${product.ListPrice}</p>
+                                </a>
+                            </li>`;
+    }
+
     return productTemplate;
 }
