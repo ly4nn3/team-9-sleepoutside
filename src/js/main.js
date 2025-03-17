@@ -1,10 +1,17 @@
+// use strict
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
+import { updateCartCount } from "./utils.mjs";
 
-const dataSource = new ProductData("tents");
-const list = new ProductList(
-  "tents",
-  dataSource,
-  document.querySelector(".product-list"),
+const productCategoryTents = "tents";
+const productTentsData = new ProductData(productCategoryTents);
+const productTentsListElement = document.querySelector(".product-list");
+
+const productList = new ProductList(
+  productCategoryTents,
+  productTentsData,
+  productTentsListElement,
 );
-list.init();
+productList.init();
+
+updateCartCount();

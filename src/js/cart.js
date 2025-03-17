@@ -2,23 +2,39 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-  //console.log(cartItems);  // for debugging purpose
+  // console.log(cartItems);
 
-  // get product list element
+  // get product list and total element
   const productListElement = document.querySelector(".product-list");
+  const cartTotalHolder = document.querySelector(".cart-footer");
+  const cartTotalElement = document.querySelector(".cart-total");
 
   // render cart items or display empty
-  //console.log(cartItems.length);
+  // console.log(cartItems.length);
   if (cartItems.length > 0) {
     // render cart items
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     productListElement.innerHTML = htmlItems.join("");
+    // display cart total
+    cartTotalElement.insertAdjacentText(
+      "beforeend",
+      calculateCartTotal(cartItems),
+    );
+    cartTotalHolder.classList.remove("hide");
   } else {
     // display empty
     productListElement.innerHTML = cartEmptyTemplate();
   }
 }
 
+function calculateCartTotal(cartItems) {
+  return cartItems.reduce((total, price) => total + price.FinalPrice, 0);
+}
+
+/**********************************
+ ************ TEMPLATES ************
+ **********************************/
+// display cart items
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
