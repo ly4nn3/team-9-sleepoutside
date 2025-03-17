@@ -195,7 +195,7 @@ button {
   -webkit-border-radius: 0 4px 0 4px;
   -moz-border-radius: 0 4px 0 4px;
   border-radius: 0 4px 4px 0;
-  background-color: #feaa00;
+  background-color: var(--primary-color);
 }
 
 .discount-label:after {
@@ -211,7 +211,7 @@ button {
   border-width: 20px;
   top: 50%;
   margin-top: -20px;
-  border-right-color: #feaa00;
+  border-right-color: var(--primary-color);
 }
 
 .discount-label:before {
