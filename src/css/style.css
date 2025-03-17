@@ -85,7 +85,7 @@ header {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -184,6 +184,63 @@ button {
 .product-card h3,
 .product-card p {
   margin: 0.5em 0;
+}
+
+/* Discount */
+.discount-label {
+  padding: 8px;
+  position: relative;
+  float: left;
+  margin-left: 1rem;
+  -webkit-border-radius: 0 4px 0 4px;
+  -moz-border-radius: 0 4px 0 4px;
+  border-radius: 0 4px 4px 0;
+  background-color: #feaa00;
+}
+
+.discount-label:after {
+
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  border-color: rgba(136, 183, 213, 0);
+
+  border-width: 20px;
+  top: 50%;
+  margin-top: -20px;
+  border-right-color: #feaa00;
+}
+
+.discount-label:before {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  top: 42%;
+  right: 100%;
+  width: 7px;
+  height: 7px;
+  opacity: .95;
+  background: #ffffff;
+  border-radius: 7px;
+  -webkit-box-shadow: inset .5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: inset .5px 0 rgba(0, 0, 0, 0.6);
+
+}
+
+
+.discount-label span {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  font-family: "Raleway", Helvetica;
+
+}
+
+.discount-price{
+  font-weight: bold;
 }
 
 .card__brand {
