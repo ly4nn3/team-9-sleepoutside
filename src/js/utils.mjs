@@ -28,3 +28,23 @@ export function getParam(param) {
   const product = urlParams.get(param);
   return product;
 }
+
+export function renderListWithTemplate (
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false
+) {
+
+  if (!["beforebegin", "afterbegin", "beforeend", "afterend"].includes(position)) {
+    console.error(`ERROR: Invalid position '${position}' for insertAdjacentHTML.`);
+    position = "afterbegin";
+  }
+
+  if (clear) {
+    parentElement.innerHTML = "";                           // clear out any existing content if needed
+  }
+  const htmlStrings = list.map(templateFn).join("");        //generate html from list
+  parentElement.insertAdjacentHTML(position, htmlStrings);  //insert into DOM
+}
