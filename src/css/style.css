@@ -267,10 +267,11 @@ button {
 /* Start cart list card styles */
 .cart-card {
   display: grid;
-  grid-template-columns: 25% auto 15%;
+  grid-template-columns: 100px auto 60px;          /* adjusted column sizes to ensure same spacing-- for remove cart item feature*/
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  gap: 15px;                                      /* added spacing*/
 }
 
 .cart-card__image {
@@ -286,6 +287,7 @@ button {
 .cart-card .card__name {
   grid-row: 1;
   grid-column: 2;
+  max-width: 300px;                       /*adjusted width for proper alignment for each item after adding */
 }
 
 .cart-card__color {
@@ -323,6 +325,28 @@ button {
 .empty-cart-holder img {
   width: 100%;
   height: auto;
+}
+
+/* style for remove button */
+.remove-item {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 10%;
+  width: 30px;
+  height: 40px;
+  transition: background-color 0.3s ease-in-out;
+  grid-row: 1 / span 1;
+  grid-column: 5;
+  justify-self: center;
+}
+
+.remove-item:hover {
+  background-color: var(--secondary-color);
 }
 
 @media screen and (min-width: 500px) {

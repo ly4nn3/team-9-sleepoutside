@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
@@ -16,19 +16,52 @@ function renderCartContents() {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     productListElement.innerHTML = htmlItems.join("");
     // display cart total
-    cartTotalElement.insertAdjacentText(
+    /*cartTotalElement.insertAdjacentText(
       "beforeend",
       calculateCartTotal(cartItems),
-    );
+    );*/
+    // correctly update the total price
+    cartTotalElement.innerHTML = `<b>Total</b>: $${calculateCartTotal(cartItems)}`;
     cartTotalHolder.classList.remove("hide");
+
+    //attached event listeners to remove buttons
+    document.querySelectorAll(".remove-item").forEach((button) => {           
+      button.addEventListener("click", removeItemFromCart);
+    });
+
   } else {
     // display empty
     productListElement.innerHTML = cartEmptyTemplate();
+    // hide total when empty
+    cartTotalHolder.classList.add("hide");
   }
 }
 
 function calculateCartTotal(cartItems) {
-  return cartItems.reduce((total, price) => total + price.FinalPrice, 0);
+  return cartItems.reduce((total, item) => total + item.FinalPrice, 0).toFixed(2);   // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
+}
+
+// function to remove an item from the cart
+function removeItemFromCart(event) {
+  const productId = event.target.getAttribute("data-id");
+  let cartItems = getLocalStorage("so-cart") || [];
+
+  // filter out the item to remove it
+  //cartItems = cartItems.filter(item => item.Id !== productId);
+
+  // find the index of the first item with the matching ID
+  const indexToRemove = cartItems.findIndex(item=> item.Id === productId);
+
+  // if found, remove only one of that item
+  if (indexToRemove !== -1) {
+    cartItems.splice(indexToRemove, 1);
+  }
+
+  // update local storage
+  setLocalStorage("so-cart", cartItems);
+
+  // re-render the cart
+  renderCartContents();
 }
 
 /**********************************
@@ -36,7 +69,7 @@ function calculateCartTotal(cartItems) {
  **********************************/
 // display cart items
 function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
+  return `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -48,10 +81,13 @@ function cartItemTemplate(item) {
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
-</li>`;
+  <p class="cart-card__price">$${item.FinalPrice}</p> 
 
-  return newItem;
+  <button class="remove-item" data-id="${item.Id}">X</button>    
+            
+</li>`;     // ^--created X button next to each item in cart for item removal
+
+  //return newItem;
 }
 
 // display empty cart
