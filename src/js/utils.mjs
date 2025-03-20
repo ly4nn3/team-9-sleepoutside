@@ -54,6 +54,51 @@ export function renderListWithTemplate(templateFn, parentElement, listData, posi
   listData.map(templateFn).forEach(dataElement => parentElement.insertAdjacentHTML(position, dataElement));
 }
 
+export function renderWithTemplate(template, parentElement, callback=null, data=null) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    if (data) {
+      callback(data);
+    } else {
+      callback();
+    }
+  }
+}
+
+export async function loadTemplate(path) {
+  try {
+    const response = await fetch(path);
+    if (response.ok) {
+      const data = await response.text();
+      return data;
+    }
+
+    throw new Error(`Fetch Error: ${response.status}`);
+  } catch(err) {
+    console.error(err);
+  }
+}
+
+export async function loadHeaderFooter() {
+  // get parent element
+  const parentHeader = document.getElementById('main-header');
+  const parentFooter = document.getElementById('footer');
+
+  // get path
+  const headerPath = "../public/partials/header.html";
+  const footerPath = "../public/partials/footer.html"
+
+  // get template
+  const header = await loadTemplate(headerPath);
+  // console.log(header)  // for testing purpose
+  const footer = await loadTemplate(footerPath);
+  
+  // render template
+  renderWithTemplate(header, parentHeader);
+  renderWithTemplate(footer, parentFooter);
+  updateCartCount();
+}
+
 export function getCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
   return cartItems.length;
