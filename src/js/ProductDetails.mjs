@@ -25,8 +25,13 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
-    const productElement = document.querySelector('.product-detail');
-    
+    const productElement = document.querySelector("product-detail");
+
+    const hasDiscount = this.product.Discount && this.product.Discount > 0;
+    const discountedPrice = hasDiscount
+      ? (this.product.ListPrice * (1 - this.product.Discount / 100)).toFixed(2)
+      : null;
+
     productElement.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
@@ -35,7 +40,10 @@ export default class ProductDetails {
         src="${this.product.Image}"
         alt="${this.product.Name}"
       />
-      <p class="product-card__price">$${this.product.ListPrice}</p>
+      <p class="product-card__price">
+        $${this.product.ListPrice}
+        ${hasDiscount ? `<span class="discounted-price">$${discountedPrice}</span>` : ""}
+      </p>
       <p class="product__color">${this.product.Colors[0].ColorName}</p>
       <p class="product__description">
         ${this.product.DescriptionHtmlSimple}

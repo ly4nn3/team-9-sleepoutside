@@ -154,6 +154,20 @@ button {
 .card__name {
   font-size: 1em;
 }
+
+.product-card__price {
+  font-size: 1.2em;
+  margin: 0.5em 0;
+}
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 0.5em;
+}
+.discounted-price {
+  color: #e63946;
+  font-weight: bold;
+}
 /* End product list card */
 
 .product-detail {
