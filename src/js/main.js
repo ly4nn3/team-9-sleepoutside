@@ -12,5 +12,6 @@ const productList = new ProductList(
   productTentsData,
   productTentsListElement,
 );
-loadHeaderFooter();
 productList.init();
+
+loadHeaderFooter();

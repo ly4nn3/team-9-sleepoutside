@@ -8,6 +8,7 @@ const dataSource = new ProductData(productCategoryTent);
 const productId = getParam("product");
 // console.log(dataSource.findProductById(productId));
 
-loadHeaderFooter();
 const product = new ProductDetails(productId, dataSource);
 product.init();
+
+loadHeaderFooter();
