@@ -8,7 +8,7 @@ export default class ShoppingCart {
         this.cartTotalElement = cartTotalElement;
     }
 
-    int() {
+    init() {
         loadHeaderFooter();  // load the header and footer of the page
         const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
         // console.log(cartItems);
@@ -65,7 +65,7 @@ export default class ShoppingCart {
         setLocalStorage("so-cart", cartItems);
 
         // remove item from view
-        this.int();
+        this.init();
     }
 }  
   

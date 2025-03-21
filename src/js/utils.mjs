@@ -54,7 +54,7 @@ export function renderListWithTemplate(templateFn, parentElement, listData, posi
   listData.map(templateFn).forEach(dataElement => parentElement.insertAdjacentHTML(position, dataElement));
 }
 
-export function renderWithTemplate(template, parentElement, callback=null, data=null) {
+export function renderWithTemplate(template, parentElement, callback, data) {
   parentElement.innerHTML = template;
   if (callback) {
     if (data) {
@@ -85,8 +85,8 @@ export async function loadHeaderFooter() {
   const parentFooter = document.getElementById('footer');
 
   // get path
-  const headerPath = "../public/partials/header.html";
-  const footerPath = "../public/partials/footer.html"
+  const headerPath = "/partials/header.html";
+  const footerPath = "/partials/footer.html"
 
   // get template
   const header = await loadTemplate(headerPath);
@@ -94,9 +94,8 @@ export async function loadHeaderFooter() {
   const footer = await loadTemplate(footerPath);
   
   // render template
-  renderWithTemplate(header, parentHeader);
+  renderWithTemplate(header, parentHeader, updateCartCount);
   renderWithTemplate(footer, parentFooter);
-  updateCartCount();
 }
 
 export function getCartCount() {
