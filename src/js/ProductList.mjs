@@ -11,7 +11,7 @@ export default class ProductList {
 
     // init needed for initial call after instantiating a class
     async init() {
-        const productsData = await this.dataSource.getData();  // get product data (a list of product data)
+        const productsData = await this.dataSource.getData(this.category);  // get product data (a list of product data)
         // console.log('Category: ', this.category);  // for testing purpose
         // console.log(`${this.category} Data: `, productsData);  // for testing purpose
         this.renderList(productsData);  // render (display) product on page
@@ -35,9 +35,9 @@ function productCardTemplate(product) {
     {
         //This is the template for products whose Retail Price is the same as the Final Price
         productTemplate = `<li class="product-card">
-                                <a href="product_pages/?product=${product.Id}">
+                                <a href="../product_pages/index.html?product=${product.Id}">
                                     <img
-                                        src="${product.Image}"
+                                        src="${product.Images.PrimaryMedium}"
                                         alt="${product.Name}"
                                     />
                                     <h3 class="card__brand">${product.Brand.Name}</h3>
@@ -48,10 +48,10 @@ function productCardTemplate(product) {
     } else {
         //This is the template for products whose Retail Price is less from the Final Price
         productTemplate = `<li class="product-card">
-                                <a href="product_pages/?product=${product.Id}">
+                                <a href="../product_pages/index.html?product=${product.Id}">
                                 <div class="discount-label"><span>Discount</span></div>
                                     <img
-                                        src="${product.Image}"
+                                        src="${product.Images.PrimaryMedium}"
                                         alt="${product.Name}"
                                     />
                                     <h3 class="card__brand">${product.Brand.Name}</h3>
