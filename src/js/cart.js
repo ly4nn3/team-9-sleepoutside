@@ -5,9 +5,9 @@ const productListElement = document.querySelector(".product-list");
 const cartTotalHolder = document.querySelector(".cart-footer");
 const cartTotalElement = document.querySelector(".cart-total");
 
-const shopingCart = new ShoppingCart(
+const shoppingCart = new ShoppingCart(
   productListElement,
   cartTotalHolder,
   cartTotalElement,
 );
-shopingCart.int();
+shoppingCart.init();
