@@ -9,7 +9,7 @@ export default class ShoppingCart {
     }
 
     init() {
-        loadHeaderFooter();  // load the header and footer of the page
+
         const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
         // console.log(cartItems);
         

@@ -11,3 +11,5 @@ const shoppingCart = new ShoppingCart(
   cartTotalElement,
 );
 shoppingCart.init();
+
+loadHeaderFooter();
