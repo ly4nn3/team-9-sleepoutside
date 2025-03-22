@@ -30,14 +30,110 @@
           comfortably at an affordable price.
         </p>
       </section>
-      <section class="products">
-        <h2>Top Products</h2>
-        <ul class="product-list">
-          <!-- DYNAMICALLY DISPLAY PRODUCT LIST-->
-        </ul>
+      <section class="categories">
+        <h2>What We Offer</h2>
+        <div class="product-categories">
+          <a
+            href="/product_listing/?category=tents"
+            onmouseenter="displayDescription(`tent-description`)"
+            onmouseleave="removeDescription(`tent-description`)"
+          >
+            <div class="category-holder">
+              <img
+                src="public/images/categories/category-tents.svg"
+                alt="image of a tent"
+              />
+              <div class="category-description" id="tent-description">
+                <p>
+                  Durable, weather-resistant shelters designed for every
+                  adventure, from solo treks to family camping trips. Stay
+                  protected and comfortable under the stars
+                </p>
+              </div>
+            </div>
+            <h3>Tents</h3>
+          </a>
+          <a
+            href="/product_listing/?category=backpacks"
+            onmouseenter="displayDescription(`backpack-description`)"
+            onmouseleave="removeDescription(`backpack-description`)"
+          >
+            <div class="category-holder">
+              <img
+                src="public/images/categories/category-backpacks.svg"
+                alt="image of a backpack"
+              />
+              <div class="category-description" id="backpack-description">
+                <p>
+                  Lightweight and spacious packs built for hiking, camping, and
+                  travel. Carry all your essentials with ease and ergonomic
+                  support
+                </p>
+              </div>
+            </div>
+            <h3>Backpacks</h3>
+          </a>
+          <a
+            href="/product_listing/?category=sleeping-bags"
+            onmouseenter="displayDescription(`sleeping-bag-description`)"
+            onmouseleave="removeDescription(`sleeping-bag-description`)"
+          >
+            <div class="category-holder">
+              <img
+                src="public/images/categories/category-sleepingbags.svg"
+                alt="image of a sleeping-bag"
+              />
+              <div class="category-description" id="sleeping-bag-description">
+                <p>
+                  Insulated and cozy sleeping solutions for all seasons. Stay
+                  warm and comfortable whether you're camping in the summer or
+                  braving the winter cold
+                </p>
+              </div>
+            </div>
+            <h3>Sleeping Bags</h3>
+          </a>
+          <a
+            href="/product_listing/?category=hammocks"
+            onmouseenter="displayDescription(`hammock-description`)"
+            onmouseleave="removeDescription(`hammock-description`)"
+          >
+            <div class="category-holder">
+              <img
+                src="public/images/categories/category-hammocks.svg"
+                alt="image of a Hammock"
+              />
+              <div class="category-description" id="hammock-description">
+                <p>
+                  Relax in the great outdoors with sturdy, portable hammocks.
+                  Perfect for lounging at the campsite, beach, or backyard
+                </p>
+              </div>
+            </div>
+            <h3>Hammocks</h3>
+          </a>
+        </div>
       </section>
     </main>
     <footer id="footer">&copy;NOT a real business</footer>
   </body>
   <script src="./js/main.js" type="module"></script>
 </html>
+
+<script>
+  // display description in an element
+  function displayDescription(elementId) {
+    const element = document.getElementById(elementId);
+    element.style.position = "relative";
+    element.style.top = "0";
+  }
+
+  // remove description in an element
+  function removeDescription(elementId) {
+    const values = ["1000px", "-1000px"];
+    const value = values[Math.floor(Math.random() * values.length)]; // get a random value in the values array
+    const element = document.getElementById(elementId);
+    element.style.position = "relative";
+    element.style.top = value;
+  }
+</script>
