@@ -290,6 +290,7 @@ button {
 .category-card:hover {
   transform: translateY(-5px);
   background-color: var(--tertiary-color);
+  color: white;
 }
 
 .category-card img {
