@@ -1,4 +1,5 @@
 import ShoppingCart from "./ShoppingCart.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
 // get elements
 const productListElement = document.querySelector(".product-list");
@@ -11,3 +12,5 @@ const shoppingCart = new ShoppingCart(
   cartTotalElement,
 );
 shoppingCart.init();
+
+loadHeaderFooter();

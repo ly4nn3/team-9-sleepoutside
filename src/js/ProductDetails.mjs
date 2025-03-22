@@ -33,7 +33,7 @@ export default class ProductDetails {
     const element = document.querySelector(selector);
     element.insertAdjacentHTML(
       "afterBegin",
-      productDetailsTemplate(this.product)
+      productDetailsTemplate(this.product.Result)
     );
   }
 }
@@ -44,7 +44,7 @@ function productDetailsTemplate(product) {
     <h2 class="divider">${product.NameWithoutBrand}</h2>
     <img
       class="divider"
-      src="${product.Image}"
+      src="${product.Images.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
     <p class="product-card__price">$${product.FinalPrice}</p>
