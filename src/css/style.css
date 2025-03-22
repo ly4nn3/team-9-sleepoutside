@@ -171,6 +171,25 @@ button {
   color: var(--dark-grey);
 }
 
+/* Styles for categories svgs */
+.categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1.5rem;
+  gap: 1rem;
+  text-align: center;
+}
+
+.category{
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+/* end of categories svgs */
+
 /* Styles for product lists */
 .product-card {
   flex: 1 1 45%;
@@ -184,6 +203,11 @@ button {
 .product-card h3,
 .product-card p {
   margin: 0.5em 0;
+}
+
+.product-card img{
+  margin-top: 1rem;
+  width: 100%;
 }
 
 /* Discount */

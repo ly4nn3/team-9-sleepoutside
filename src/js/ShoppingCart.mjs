@@ -17,7 +17,7 @@ export default class ShoppingCart {
         // console.log(cartItems.length);
         if (cartItems.length > 0) {
                 // render cart items
-                const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+                const htmlItems = cartItems.map((item) => cartItemTemplate(item.Result));
                 this.productListElement.innerHTML = htmlItems.join("");
                 // display cart total
                 /*this.cartTotalElement.insertAdjacentText(
@@ -42,7 +42,7 @@ export default class ShoppingCart {
     }
     
     calculateCartTotal(cartItems) {
-        return cartItems.reduce((total, item) => total + item.FinalPrice, 0).toFixed(2);   // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
+        return cartItems.reduce((total, item) => total + item.Result.FinalPrice, 0).toFixed(2);   // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
     }
     
     // function to remove an item from the cart
@@ -54,7 +54,7 @@ export default class ShoppingCart {
         //cartItems = cartItems.filter(item => item.Id !== productId);
         
         // find the index of the first item with the matching ID
-        const indexToRemove = cartItems.findIndex(item=> item.Id === productId);
+        const indexToRemove = cartItems.findIndex(item=> item.Result.Id === productId);
         
         // if found, remove only one of that item
         if (indexToRemove !== -1) {
@@ -77,7 +77,7 @@ function cartItemTemplate(item) {
     return `<li class="cart-card divider" id="${item.Id}">
         <a href="#" class="cart-card__image">
             <img
-            src="${item.Image}"
+            src="${item.Images.PrimarySmall}"
             alt="${item.Name}"
             />
         </a>
