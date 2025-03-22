@@ -31,7 +31,7 @@ export default class ProductData {
       const response = await fetch(`${baseURL}product/${id}`);
       if (response.ok) {
         const product = await convertToJson(response);
-        console.log("PROODUCT: ", product);  // for debugging purpose
+        // console.log("PROODUCT: ", product);  // for debugging purpose
         return product.Result;
       } else {
         throw new Error(`Fetch Error: {status: ${response.status}}`);

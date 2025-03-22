@@ -11,7 +11,13 @@
     <header id="main-header" class="divider"></header>
     <main class="divider">
       <section class="products">
-        <h2>Top Products: <span id="products-category-title"></span></h2>
+        <div class="header-holder">
+          <h2>Top Products: <span id="products-category-title"></span></h2>
+          <select id="product-sorting">
+            <option value="">Sort Product</option>
+            <!-- DYNAMICALLY INCLUDE OPTIONS -->
+          </select>
+        </div>
         <ul class="product-list">
           <!-- DYNAMICALLY DISPLAY PRODUCT LIST-->
         </ul>

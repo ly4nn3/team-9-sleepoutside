@@ -236,12 +236,27 @@ button {
   padding: 0.5em;
 }
 
-.products h2 {
+.products .header-holder {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.header-holder h2 {
   text-transform: capitalize;
 }
 
-.products h2 span {
+.header-holder h2 span {
   color: var(--tertiary-color);
+}
+
+.header-holder select {
+  width: fit-content;
+  padding: var(--base-padding);
+  border-radius: 10px;
+  height: fit-content;
+  /* font-size: .75em; */
+  align-self: center;
+  cursor: pointer;
 }
 
 .product-list {
@@ -447,6 +462,10 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
+  }
+
+  .products .header-holder {
+    grid-template-columns: 1fr auto;
   }
 }
 
