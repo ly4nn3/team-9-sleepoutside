@@ -1,3 +1,6 @@
+const baseURL = import.meta.env.VITE_SERVER_URL
+console.log("LINK TO PRODUCT DATA: ", baseURL);  // debugging purpose
+
 function convertToJson(res) {
   if (res.ok) {
     return res.json();
@@ -7,19 +10,34 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-  constructor(category) {
-    this.category = category;
-    this.path = `../json/${this.category}.json`;
-  }
+  constructor() {}
 
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
+  async getData(category) {
+    try {
+      const response = await fetch(`${baseURL}products/search/${category}`);
+      if (response.ok) {
+        const data = await convertToJson(response);
+        return data.Result;
+      } else {
+        throw new Error(`Fetch Error: {status: ${response.status}}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
   
   async findProductById(id) {
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    try {
+      const response = await fetch(`${baseURL}product/${id}`);
+      if (response.ok) {
+        const product = await convertToJson(response);
+        // console.log("PROODUCT: ", product);  // for debugging purpose
+        return product.Result;
+      } else {
+        throw new Error(`Fetch Error: {status: ${response.status}}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
