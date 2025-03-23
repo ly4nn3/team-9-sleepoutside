@@ -89,7 +89,7 @@ header {
   margin-top: -1.3em;
 }
 
-.logo--square>div {
+.logo--square > div {
   margin-top: -1.7em;
 }
 
@@ -163,7 +163,7 @@ button {
   padding: var(--large-padding);
 }
 
-.categories>h2 {
+.categories > h2 {
   text-align: center;
 }
 
@@ -221,7 +221,7 @@ button {
   transition: top 0.5s;
   background: rgba(0, 0, 0, 0.8);
   color: #f7f8ffe0;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 .category-holder img {
@@ -288,7 +288,7 @@ button {
 #search-bar {
   width: 52%;
   /* max-width: 25rem; */
-  padding: .7em;
+  padding: 0.7em;
   /* margin: 0.5em 0; */
   border-radius: 10px;
   border: 1px solid var(--light-grey);
