@@ -1,5 +1,5 @@
 // use strict
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate, generateBreadcrumb } from "./utils.mjs";
 
 export default class ProductList {
     // constructor for geting parameter in a class
@@ -19,6 +19,16 @@ export default class ProductList {
         const productsData = await this.dataSource.getData(this.category);  // get product data (a list of product data)
         // console.log("Category: ", this.category);  // for testing purpose
         // console.log(`${this.category} Data: `, productsData);  // for testing purpose
+        
+        // add breadcrumb
+        const mainElement = document.querySelector("main");
+        const breadcrumbContainer = document.createElement("div");
+        breadcrumbContainer.innerHTML = generateBreadcrumb(this.category, productsData.length, true);
+
+        const productsSection = mainElement.querySelector(".products");
+        mainElement.insertBefore(breadcrumbContainer, productsSection);
+
+        // sorting function
         this.sortList(productsData);
 
         //initialize the search function
