@@ -89,7 +89,7 @@ header {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -163,13 +163,13 @@ button {
   padding: var(--large-padding);
 }
 
-.categories > h2 {
+.categories>h2 {
   text-align: center;
 }
 
 .product-categories {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   justify-items: center;
   justify-content: center;
   gap: 2rem;
@@ -189,7 +189,7 @@ button {
 
 .category-holder {
   display: grid;
-  box-shadow: var(--secondary-color) 0 0 10px;
+  box-shadow: 0 0 10px;
   border-radius: 15px;
   transition:
     transform 0.2s,
@@ -221,13 +221,14 @@ button {
   transition: top 0.5s;
   background: rgba(0, 0, 0, 0.8);
   color: #f7f8ffe0;
+  font-size: .9em;
 }
 
 .category-holder img {
   grid-column: 1/2;
   grid-row: 1/2;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: auto;
   padding: var(--large-padding);
   align-self: center;
   justify-self: center;
@@ -252,6 +253,7 @@ button {
 
 .header-holder h2 {
   text-transform: capitalize;
+  margin: var(--base-margin);
 }
 
 .header-holder h2 span {
@@ -259,13 +261,14 @@ button {
 }
 
 .header-holder select {
-  width: fit-content;
+  width: 38%;
   padding: var(--base-padding);
   border-radius: 10px;
   height: fit-content;
   /* font-size: .75em; */
   align-self: center;
   cursor: pointer;
+  border: 1px solid var(--light-grey);
 }
 
 .product-list {
@@ -283,10 +286,10 @@ button {
 
 /* Styles for search bar */
 #search-bar {
-  width: 100%;
-  max-width: 25rem;
-  padding: 0.5em;
-  margin: 0.5em 0;
+  width: 52%;
+  /* max-width: 25rem; */
+  padding: .7em;
+  /* margin: 0.5em 0; */
   border-radius: 10px;
   border: 1px solid var(--light-grey);
 }
@@ -490,6 +493,20 @@ button {
   /* .products .header-holder {
     grid-template-columns: 1fr auto;
   } */
+
+  /* Sort and Search Styling */
+  .header-holder h2 {
+    text-transform: capitalize;
+    margin: var(--large-margin);
+  }
+
+  .header-holder select {
+    width: fit-content;
+  }
+
+  #search-bar {
+    width: fit-content;
+  }
 }
 
 footer {

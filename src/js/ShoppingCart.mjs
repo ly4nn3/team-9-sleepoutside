@@ -9,7 +9,7 @@ export default class ShoppingCart {
     }
 
     init() {
-
+        loadHeaderFooter();  // required to update cart count
         const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
         // console.log(cartItems);
         
