@@ -119,3 +119,47 @@ export function updateCartCount() {
     cartElement.appendChild(countSpan);
   }
 }
+
+export function generateBreadcrumb(category, productCount = null, isCategory = false) {
+  if (!category || typeof category !== "string") {
+    console.warn("Invalid catgory provided: ", category);
+    return "";
+  }
+
+  try {
+    const trimmedCategory = category.trim();
+
+    if (trimmedCategory ==="") {
+      console.warn("Empty category provided: ", category);
+      return "";
+    }
+
+    const formattedCategory = trimmedCategory.charAt(0).toUpperCase() + trimmedCategory.slice(1);
+    
+    let countText = "";
+    if (productCount !== null) {
+      const count = Number(productCount);
+      if (isNaN(count) || count < 0) {
+        console.warn("Invalid product count provided: ", productCount);
+        countText = "";
+      } else {
+        countText = `▶ (${count} items)`;
+      }
+    }
+
+    // linking based on active page
+    const categoryDisplay = isCategory 
+      ? formattedCategory 
+      : `<a href="/product_listing/?category=${trimmedCategory}" class="breadcrumb-link">${formattedCategory}</a>`;
+
+    return `
+      <nav aria-label="breadcrumb" class="breadcrumb">
+        ${categoryDisplay} 
+        ${countText ? `<span class="breadcrumb-count">${countText}</span>` : ""}
+      </nav>
+    `;
+  } catch (err) {
+    console.error("Error generating breadcrumb: ", err);
+    return "";
+  }
+}

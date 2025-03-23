@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage, updateCartCount } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, updateCartCount, generateBreadcrumb } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -11,6 +11,14 @@ export default class ProductDetails {
     // Fetch product details
     this.product = await this.dataSource.findProductById(this.productId);
     
+    // Add breadcrumb
+    if (this.product.Category) {
+      const mainElement = document.querySelector("main");
+      const breadcrumbContainer = document.createElement("div");
+      breadcrumbContainer.innerHTML = generateBreadcrumb(this.product.Category);
+      mainElement.insertAdjacentElement("afterbegin", breadcrumbContainer);
+    }
+
     // Render product details
     this.renderProductDetails("main");
     
@@ -31,8 +39,9 @@ export default class ProductDetails {
   
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
+    
     element.insertAdjacentHTML(
-      "afterBegin",
+      "beforeend",
       productDetailsTemplate(this.product)
     );
   }
