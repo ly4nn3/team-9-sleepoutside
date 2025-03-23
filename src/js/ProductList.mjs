@@ -17,9 +17,12 @@ export default class ProductList {
         categoryTitle.innerHTML = this.category;
         // fetch category products data
         const productsData = await this.dataSource.getData(this.category);  // get product data (a list of product data)
-        // console.log('Category: ', this.category);  // for testing purpose
+        // console.log("Category: ", this.category);  // for testing purpose
         // console.log(`${this.category} Data: `, productsData);  // for testing purpose
         this.sortList(productsData);
+
+        //initialize the search function
+        searchProduct();
     }
 
     // renderList to rendering (i.e displaying) product in the page
@@ -158,7 +161,32 @@ export default class ProductList {
             sortByOption(this.sortElement.value);
         })
     }
+
 }
+
+//Function to search among the products displayed in the page
+function searchProduct(){
+    //Waits until the user types something in the search bar
+    document.getElementById("search-bar").addEventListener("keyup", event => {
+        //Loops through all the products displayed in the page
+        document.querySelectorAll(".product-card").forEach(card => {
+            //Gets the name and brand in a single string
+            const productInfo = ` ${card.querySelector(".card__name").textContent.toLowerCase()} ${card.querySelector(".card__brand").textContent.toLowerCase()} `;
+
+            //Gets what the user typed in the search bar
+            const userInput = event.target.value.toLowerCase().trim();
+            
+            //If what the user typed is not included in this string, the product gets the .filter class (display:none). It also makes sure that the search bar is not empty
+            if (!productInfo.includes(userInput) && userInput !== ""){
+                card.classList.add("filter")
+            } else {
+                card.classList.remove("filter")
+            }
+        })
+    })
+}
+
+
 
 
 /***********************************
