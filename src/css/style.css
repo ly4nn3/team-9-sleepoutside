@@ -492,6 +492,18 @@ button {
   box-shadow: none;
 }
 
+.product-discount {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.product-discount .spacing {
+  text-align: center;
+}
+.product-discount > span {
+  text-align: end;
+}
+
 /* Start cart list card styles */
 .cart-card {
   display: grid;

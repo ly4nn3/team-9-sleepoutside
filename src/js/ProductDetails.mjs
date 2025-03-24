@@ -71,7 +71,12 @@ function productDetailsTemplate(product) {
       src="${product.Images.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
-    <p class="product-card__price">$${product.FinalPrice}</p>
+    <div class="product-discount">
+      <del><b>Price:</b> $${product.SuggestedRetailPrice}</del>
+      <span class="spacing"> - </span>
+      <span><b>Discount:</b> ${((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100).toFixed(0)}%</span>
+    </div>
+    <p class="product-card__price"><b>Final Price: </b>$${product.FinalPrice}</p>
     <p class="product__color">${product.Colors[0].ColorName}</p>
     <p class="product__description">
     ${product.DescriptionHtmlSimple}
