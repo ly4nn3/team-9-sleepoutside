@@ -1,10 +1,14 @@
-import { setLocalStorage, getLocalStorage, updateCartCount, generateBreadcrumb } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, updateCartCount, generateBreadcrumb, animateCart } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
     this.dataSource = dataSource;
+
+    this.cartElement = null;
+    this.addToCartBtn = null;
+    console.log("in product detail page");
   }
 
   async init() {
@@ -22,19 +26,30 @@ export default class ProductDetails {
     // Render product details
     this.renderProductDetails("main");
     
+    // get rendered elements
+    this.cartElement = document.querySelector(".cart");  // gotten from header
+    this.addToCartBtn = document.querySelector("#addToCart");
+
+
     // Add event listener for Add to Cart button
-    document
-      .getElementById("addToCart")
-      .addEventListener("click", this.addToCart.bind(this));
+    this.addToCartBtn.addEventListener("click", this.addToCart.bind(this));
   }
 
-  addToCart() {
-    const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-      // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
-      currentCartItems.push(this.product); // add product to current cart array.
-      // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
-      setLocalStorage("so-cart", currentCartItems); // store current cart array.
-      updateCartCount();
+  async addToCart() {
+      console.log('Animating cart');  // for debugging purpose
+      const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
+      console.log("Animated: ", animated);  // for testing purpose
+      if (animated) {
+        console.log('Completed animate cart');  // for testing purpose
+        const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
+        // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+        currentCartItems.push(this.product); // add product to current cart array.
+        // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+        setLocalStorage("so-cart", currentCartItems); // store current cart array.
+        updateCartCount();
+      } else {
+        console.log("Animate Cart Error!");
+      }
   }
   
   renderProductDetails(selector) {

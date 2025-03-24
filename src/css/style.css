@@ -150,6 +150,20 @@ button {
   text-align: center;
 }
 
+/* Add to cart animation styles */
+.cartAnimate {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  box-shadow: 0 0 15px;
+  overflow: hidden;
+}
+
+.cartAnimate img {
+  width: 100%;
+  height: auto;
+}
+
 .mission {
   padding: 0 0.5em;
   /* margin: 0.5em 0; */
@@ -455,6 +469,27 @@ button {
 
 .product-detail img {
   width: 100%;
+}
+
+.product-detail__add {
+  width: fit-content;
+  justify-self: center;
+  box-shadow: 0 0 10px;
+  border-radius: 10px;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.product-detail__add:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px;
+}
+
+.product-detail__add:active {
+  transform: scale(1);
+  box-shadow: none;
 }
 
 /* Start cart list card styles */

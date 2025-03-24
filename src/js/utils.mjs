@@ -163,3 +163,54 @@ export function generateBreadcrumb(category, productCount = null, isCategory = f
     return "";
   }
 }
+
+export async function animateCart(addBtnElement, cartElement, productImagePath) {
+  return new Promise((resolve, reject) => {
+    const cartAnimate = document.createElement("div");
+    cartAnimate.setAttribute("class", "cartAnimate");
+    cartAnimate.style.zIndex = '2';
+    const image = document.createElement("img");
+    image.src = productImagePath;
+    image.alt = "product image";
+    cartAnimate.appendChild(image);
+
+    const main = document.querySelector("main");
+    main.appendChild(cartAnimate); // add element to document
+
+
+    // console.log("ADD BTN ELEMENT: ", addBtnElement);  // for testing purpose
+    // console.log("CART ELEMENT: ", cartElement);  // for testing purpose
+
+    // get the position of add to cart btn and cart
+    const addBtnPosition = addBtnElement.getBoundingClientRect();
+    const cartPosition = cartElement.getBoundingClientRect();
+
+    // set start postion movement at addBtnPostion
+    cartAnimate.style.position = "absolute";
+    // check screen size
+    if (window.innerWidth > 650) {
+      cartAnimate.style.left = addBtnPosition.left + 90 + "px";
+      cartAnimate.style.top = addBtnPosition.top + 150 + "px";
+    } else {
+      cartAnimate.style.left = addBtnPosition.left + 50 + "px";
+      cartAnimate.style.top = addBtnPosition.top + 180 + "px";
+    }
+
+    // start smooth transition movement
+    const duration = 3;
+    cartAnimate.style.transition = `transform ${duration}s ease, width .5s, height .5s`;
+    cartAnimate.style.transform = `translate(${cartPosition.left - addBtnPosition.left}px, ${cartPosition.top - addBtnPosition.top}px)`;
+
+    setTimeout(() => {
+      cartAnimate.style.width = "0";
+      cartAnimate.style.height = "0";
+      setTimeout(() => {
+        if (main.removeChild(cartAnimate)) { // remove element;
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      }, 500);
+    }, duration * 400);
+  })
+}
