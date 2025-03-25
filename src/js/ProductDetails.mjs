@@ -30,26 +30,43 @@ export default class ProductDetails {
     this.cartElement = document.querySelector(".cart");  // gotten from header
     this.addToCartBtn = document.querySelector("#addToCart");
 
-
     // Add event listener for Add to Cart button
     this.addToCartBtn.addEventListener("click", this.addToCart.bind(this));
   }
 
   async addToCart() {
-      console.log('Animating cart');  // for debugging purpose
-      const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
-      console.log("Animated: ", animated);  // for testing purpose
-      if (animated) {
+    console.log('Animating cart');  // for debugging purpose
+    const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
+    console.log("Animated: ", animated);  // for testing purpose
+    
+    if (animated) {
         console.log('Completed animate cart');  // for testing purpose
-        const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-        // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
-        currentCartItems.push(this.product); // add product to current cart array.
-        // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+        let currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
+        
+        //filter out any invalid entries just in case
+        currentCartItems = currentCartItems.filter(item => item && item.Id);
+
+        //check if a duplicate item is already in the cart
+        const existingItem = currentCartItems.find(item => item.Id === this.product.Id);
+
+        if (existingItem) {
+            //make sure quantity exists before updating
+            if (!existingItem.quantity) {
+                existingItem.quantity = 1;
+            }
+            existingItem.quantity += 1;
+        } else {
+            //if duplicate item is not already in cart, then add it with quantity = 1
+            const newProduct = { ...this.product, quantity: 1};
+            currentCartItems.push(newProduct); // add product to current cart array.
+        }
+
+        console.log("Cart Items: ", currentCartItems);
         setLocalStorage("so-cart", currentCartItems); // store current cart array.
         updateCartCount();
-      } else {
+    } else {
         console.log("Animate Cart Error!");
-      }
+    }
   }
   
   renderProductDetails(selector) {
