@@ -100,7 +100,7 @@ export async function loadHeaderFooter() {
 
 export function getCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
-  return cartItems.length;
+  return cartItems.reduce((total, item) => total + (item.quantity || 1), 0);    //fix cart bag qty to reflect correct total of items
 }
 
 export function updateCartCount() {
