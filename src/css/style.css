@@ -248,6 +248,11 @@ button {
   justify-self: center;
 }
 
+.product-categories img {
+  width: 100%;
+  height: auto;
+}
+
 /* END STYLES FOR HOME CATEGORIES */
 
 /* Breadcrumb styles */
