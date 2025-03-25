@@ -1,4 +1,5 @@
 const baseURL = import.meta.env.VITE_SERVER_URL
+console.log("LINK TO PRODUCT DATA: ", baseURL);  // debugging purpose
 
 function convertToJson(res) {
   if (res.ok) {

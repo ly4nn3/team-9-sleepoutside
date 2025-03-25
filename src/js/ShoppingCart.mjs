@@ -72,7 +72,7 @@ export default class ShoppingCart {
 /**********************************
 ************ TEMPLATES ************
 **********************************/
-// display cart items                   // shows item details in div to adjust in css
+// display cart items
 function cartItemTemplate(item) {
     return `<li class="cart-card divider" id="${item.Id}">
         <a href="#" class="cart-card__image">
@@ -85,16 +85,12 @@ function cartItemTemplate(item) {
             <h2 class="card__name">${item.Name}</h2>
         </a>
         <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-
-        <div class="cart-card_details">
-            <p class="cart-card__quantity">qty:${item.quantity || 1}</p>
-            <p class="cart-card__price">Price: $${item.FinalPrice}</p>            
-            <p class="cart-card__price">Total: $${(item.FinalPrice * (item.quantity || 1)).toFixed(2)}</p>
-        </div>
+        <p class="cart-card__quantity">qty: 1</p>
+        <p class="cart-card__price">$${item.FinalPrice}</p> 
 
         <button class="remove-item" data-id="${item.Id}">X</button>    
                     
-        </li>`;     // ^--created X button next to each item in cart for item removal; adjusted to show actual qty and total price
+        </li>`;     // ^--created X button next to each item in cart for item removal
 }
 
 // display empty cart

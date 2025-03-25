@@ -248,11 +248,6 @@ button {
   justify-self: center;
 }
 
-.product-categories img {
-  width: 100%;
-  height: auto;
-}
-
 /* END STYLES FOR HOME CATEGORIES */
 
 /* Breadcrumb styles */
@@ -551,15 +546,6 @@ button {
 .cart-card__price {
   grid-row: 2;
   grid-column: 3;
-}
-
-/*add styling to cart details*/
-
-.cart-card_details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin: 0.5rem 0;
 }
 
 .cart-footer {
