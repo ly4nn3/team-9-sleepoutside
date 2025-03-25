@@ -32,24 +32,32 @@ export default class ProductDetails {
 
 
     // Add event listener for Add to Cart button
-    this.addToCartBtn.addEventListener("click", this.addToCart.bind(this));
+    if (this.addToCartBtn) {
+      this.addToCartBtn.addEventListener("click", this.addToCart.bind(this));
+    } else {
+      console.error("Add to Cart button not found!");
+    }
   }
 
   async addToCart() {
-      console.log('Animating cart');  // for debugging purpose
-      const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
-      console.log("Animated: ", animated);  // for testing purpose
-      if (animated) {
-        console.log('Completed animate cart');  // for testing purpose
-        const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-        // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
-        currentCartItems.push(this.product); // add product to current cart array.
-        // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
-        setLocalStorage("so-cart", currentCartItems); // store current cart array.
-        updateCartCount();
-      } else {
-        console.log("Animate Cart Error!");
-      }
+    if (!this.cartElement) {
+      console.error("Cart element not found!");
+      return;
+    }
+    console.log('Animating cart');  // for debugging purpose
+    const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
+    console.log("Animated: ", animated);  // for testing purpose
+    if (animated) {
+      console.log('Completed animate cart');  // for testing purpose
+      const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
+      // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+      currentCartItems.push(this.product); // add product to current cart array.
+      // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+      setLocalStorage("so-cart", currentCartItems); // store current cart array.
+      updateCartCount();
+    } else {
+      console.log("Animate Cart Error!");
+    }
   }
   
   renderProductDetails(selector) {
@@ -64,24 +72,18 @@ export default class ProductDetails {
 
 function productDetailsTemplate(product) {
   return `<section class="product-detail"> 
-    <h3>${product.Brand.Name}</h3>
-    <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <h3>${product.Brand?.Name || "Unknown Brand"}</h3>
+    <h2 class="divider">${product.NameWithoutBrand || "Unknown Product"}</h2>
     <img
       class="divider"
-      src="${product.Images.PrimaryLarge}"
-      alt="${product.NameWithoutBrand}"
+      src="${product.Images?.PrimaryLarge || ""}"
+      alt="${product.NameWithoutBrand || "Product Image"}"
     />
     <div class="product-discount">
-      <del><b>Price:</b> $${product.SuggestedRetailPrice}</del>
+      <del><b>Price:</b> $${product.SuggestedRetailPrice || "0.00"}</del>
       <span class="spacing"> - </span>
-      <span><b>Discount:</b> ${((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100).toFixed(0)}%</span>
+      <span><b>Discount:</b> ${((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100 || 0).toFixed(0)}%</span>
     </div>
-    <p class="product-card__price"><b>Final Price: </b>$${product.FinalPrice}</p>
-    <p class="product__color">${product.Colors[0].ColorName}</p>
+    <p class="product-card__price"><b>Final Price: </b>$${product.FinalPrice || "0.00"}</p>
+    <p class="product__color">${product.Colors?.[0]?.ColorName || "No Color"}</p>
     <p class="product__description">
-    ${product.DescriptionHtmlSimple}
-    </p>
-    <div class="product-detail__add">
-      <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-    </div></section>`;
-}
