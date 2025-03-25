@@ -29,28 +29,10 @@ export default class ProductDetails {
   }
 
   addToCart() {
-    let currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-      
-      //filter out any invalid enteries just in case
-      currentCartItems = currentCartItems.filter(item => item && item.Id);
-
-      //check if a duplicate item is already in the cart
-      const existingItem = currentCartItems.find(item => item.Id === this.product.Id);
-
-      if (existingItem) {
-        //make sure quantity exists before updating
-        if (!existingItem.quantity) {
-          existingItem.quantity = 1;
-        }
-        existingItem.quantity += 1;
-      } else {
-        //if duplicate item is not already in cart, then add it with quantity = 1
-        const newProduct = { ...this.product, quantity: 1};
-        
-        currentCartItems.push(newProduct); // add product to current cart array.
-      }
-
-      console.log("Cart Items: ", currentCartItems);
+    const currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
+      // console.log("CURRENT-CART-ITEMS: ", currentCartItems);  // for debugging purpose
+      currentCartItems.push(this.product); // add product to current cart array.
+      // console.log("UPDATED-CART-ITEMS: ", currentCartItems);  // for debugging purpose
       setLocalStorage("so-cart", currentCartItems); // store current cart array.
       updateCartCount();
   }
