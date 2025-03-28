@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_SERVER_URL
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
 function convertToJson(res) {
   if (res.ok) {
@@ -24,7 +24,7 @@ export default class ExternalServices {
       console.error(err);
     }
   }
-  
+
   async findProductById(id) {
     try {
       const response = await fetch(`${baseURL}product/${id}`);
@@ -49,6 +49,5 @@ export default class ExternalServices {
       body: JSON.stringify(payload),
     };
     return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
-
   }
 }

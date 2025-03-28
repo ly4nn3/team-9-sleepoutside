@@ -1,4 +1,10 @@
-import { setLocalStorage, getLocalStorage, updateCartCount, generateBreadcrumb, animateCart } from "./utils.mjs";
+import {
+  setLocalStorage,
+  getLocalStorage,
+  updateCartCount,
+  generateBreadcrumb,
+  animateCart,
+} from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -14,7 +20,7 @@ export default class ProductDetails {
   async init() {
     // Fetch product details
     this.product = await this.dataSource.findProductById(this.productId);
-    
+
     // Add breadcrumb
     if (this.product.Category) {
       const mainElement = document.querySelector("main");
@@ -25,9 +31,9 @@ export default class ProductDetails {
 
     // Render product details
     this.renderProductDetails("main");
-    
+
     // get rendered elements
-    this.cartElement = document.querySelector(".cart");  // gotten from header
+    this.cartElement = document.querySelector(".cart"); // gotten from header
     this.addToCartBtn = document.querySelector("#addToCart");
 
     // Add event listener for Add to Cart button
@@ -35,46 +41,52 @@ export default class ProductDetails {
   }
 
   async addToCart() {
-    console.log('Animating cart');  // for debugging purpose
-    const animated = await animateCart(this.addToCartBtn, this.cartElement, this.product.Images.PrimarySmall);  // display animation completely before updating count
-    console.log("Animated: ", animated);  // for testing purpose
-    
+    console.log("Animating cart"); // for debugging purpose
+    const animated = await animateCart(
+      this.addToCartBtn,
+      this.cartElement,
+      this.product.Images.PrimarySmall,
+    ); // display animation completely before updating count
+    console.log("Animated: ", animated); // for testing purpose
+
     if (animated) {
-        console.log('Completed animate cart');  // for testing purpose
-        let currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-        
-        //filter out any invalid entries just in case
-        currentCartItems = currentCartItems.filter(item => item && item.Id);
+      console.log("Completed animate cart"); // for testing purpose
+      let currentCartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
 
-        //check if a duplicate item is already in the cart
-        const existingItem = currentCartItems.find(item => item.Id === this.product.Id);
+      //filter out any invalid entries just in case
+      currentCartItems = currentCartItems.filter((item) => item && item.Id);
 
-        if (existingItem) {
-            //make sure quantity exists before updating
-            if (!existingItem.quantity) {
-                existingItem.quantity = 1;
-            }
-            existingItem.quantity += 1;
-        } else {
-            //if duplicate item is not already in cart, then add it with quantity = 1
-            const newProduct = { ...this.product, quantity: 1};
-            currentCartItems.push(newProduct); // add product to current cart array.
+      //check if a duplicate item is already in the cart
+      const existingItem = currentCartItems.find(
+        (item) => item.Id === this.product.Id,
+      );
+
+      if (existingItem) {
+        //make sure quantity exists before updating
+        if (!existingItem.quantity) {
+          existingItem.quantity = 1;
         }
+        existingItem.quantity += 1;
+      } else {
+        //if duplicate item is not already in cart, then add it with quantity = 1
+        const newProduct = { ...this.product, quantity: 1 };
+        currentCartItems.push(newProduct); // add product to current cart array.
+      }
 
-        console.log("Cart Items: ", currentCartItems);
-        setLocalStorage("so-cart", currentCartItems); // store current cart array.
-        updateCartCount();
+      console.log("Cart Items: ", currentCartItems);
+      setLocalStorage("so-cart", currentCartItems); // store current cart array.
+      updateCartCount();
     } else {
-        console.log("Animate Cart Error!");
+      console.log("Animate Cart Error!");
     }
   }
-  
+
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
-    
+
     element.insertAdjacentHTML(
       "beforeend",
-      productDetailsTemplate(this.product)
+      productDetailsTemplate(this.product),
     );
   }
 }
@@ -91,7 +103,7 @@ function productDetailsTemplate(product) {
     <div class="product-discount">
       <del><b>Price:</b> $${product.SuggestedRetailPrice}</del>
       <span class="spacing"> - </span>
-      <span><b>Discount:</b> ${((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100).toFixed(0)}%</span>
+      <span><b>Discount:</b> ${(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100).toFixed(0)}%</span>
     </div>
     <p class="product-card__price"><b>Final Price: </b>$${product.FinalPrice}</p>
     <p class="product__color">${product.Colors[0].ColorName}</p>

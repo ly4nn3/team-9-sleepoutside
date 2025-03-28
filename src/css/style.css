@@ -607,7 +607,7 @@ button {
 }
 
 /* FORM */
-#checkout-form{
+#checkout-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -615,7 +615,6 @@ button {
   margin: 0 auto;
   padding: 2rem;
   border: 2px solid var(--primary-color);
-
 }
 
 #checkout-form fieldset {
@@ -626,23 +625,23 @@ button {
   border: 1px solid var(--dark-grey);
 }
 
-#checkout-form input{
+#checkout-form input {
   display: block;
 }
 
-.summary{
+.summary {
   display: flex;
   flex-direction: column;
 }
 
-.summary div{
+.summary div {
   margin: 0;
   padding: 0;
 }
 
-.summary div:nth-child(odd){
+.summary div:nth-child(odd) {
   display: inline;
-  margin-bottom: 1rem ;
+  margin-bottom: 1rem;
 }
 /* end form */
 
@@ -656,7 +655,7 @@ button {
     font-size: 1.2em;
   }
 
-  .cart-card{
+  .cart-card {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
   }
