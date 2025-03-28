@@ -108,12 +108,19 @@ button {
   font-size: var(--large-font);
   cursor: pointer;
   border-radius: 10px;
+  transition: transform 0.2s;
 }
 
 button:hover {
   background-color: var(--primary-color);
   transition: ease-in 0.3s;
   color: var(--dark-grey);
+  transform: scale(1.01);
+}
+
+button:active {
+  background-color: var(--secondary-color);
+  transform: scale(1);
 }
 
 .divider {
@@ -122,6 +129,61 @@ button:hover {
 
 .hide {
   display: none;
+}
+
+/* GENERAL FORM STYLING */
+form {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--large-padding);
+  border: none;
+  /* box-shadow: 0 0 15px; */
+  border-radius: 15px;
+}
+
+form fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid var(--dark-grey);
+  border-radius: 10px;
+  margin: var(--large-margin);
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+form legend {
+  font-size: var(--large-font);
+  font-weight: bold;
+}
+
+form input {
+  display: block;
+  width: 100%;
+  padding: var(--base-padding);
+  font-size: 0.9em;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+form .name-input {
+  text-transform: capitalize;
+}
+
+form input[required] {
+  border-right: 2px solid rgb(224, 0, 0);
+}
+
+form input[required]:valid {
+  border-right: 2px solid rgb(22, 151, 22);
+}
+
+form input[required]:focus {
+  box-shadow: 0 0 10px var(--tertiary-color);
 }
 
 /* End utility classes */
@@ -297,10 +359,12 @@ button:hover {
     transform: scale(1);
     opacity: 0.7;
   }
+
   50% {
     transform: scale(1.5);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 0.7;
@@ -330,6 +394,7 @@ button:hover {
   margin-left: 0.5rem;
   font-weight: normal;
 }
+
 /* End of breadcrumb styles */
 
 .products {
@@ -512,6 +577,7 @@ button:hover {
 .product-discount .spacing {
   text-align: center;
 }
+
 .product-discount > span {
   text-align: end;
 }
@@ -635,48 +701,14 @@ button:hover {
 }
 
 /* CHECKOUT FORM STYLES */
-#checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 50vw;
-  margin: 0 auto;
-  padding: 2rem;
-  border: 2px solid var(--primary-color);
+.checkout-main {
+  /* background: url("../public/images/background/check-out-background-trans.png"); */
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
-#checkout-form fieldset {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
-  border: 1px solid var(--dark-grey);
-}
-
-#checkout-form legend {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: var(--dark-color);
-}
-
-#checkout-form input {
-  display: block;
-  width: 100%;
-  line-height: 2rem;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-
-input[required] {
-  border-left: 5px solid rgb(224, 0, 0);
-}
-
-input[required]:valid {
-  border-left: 5px solid rgb(22, 151, 22);
-}
-
-input[required]:focus {
-  box-shadow: 0 0 10px var(--tertiary-color);
+.checkout-header {
+  text-align: center;
 }
 
 .summary {
@@ -690,7 +722,7 @@ input[required]:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 8px var(--large-padding);
 }
 
 .summary div span:first-child {
@@ -723,6 +755,18 @@ input[required]:focus {
     margin: auto;
   }
 
+  /* GENERAL FORM STYLING */
+  form {
+    box-shadow: 0 0 15px;
+    border-radius: 10px;
+    margin-bottom: var(--large-margin);
+    transition: box-shadow 0.2s;
+  }
+
+  form:hover {
+    box-shadow: 0 0 5px;
+  }
+
   .mission {
     font-size: 1.2em;
   }
@@ -748,6 +792,16 @@ input[required]:focus {
 
   #search-bar {
     width: fit-content;
+  }
+
+  /* CHECKOUT FORM SYTLING */
+  .checkout-main {
+    background: url("../public/images/background/checkout.gif");
+    background-repeat: round;
+  }
+
+  #checkout-form {
+    background-color: #fff;
   }
 }
 

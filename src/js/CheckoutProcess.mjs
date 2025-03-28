@@ -31,7 +31,7 @@ function formDataToJSON(formElement) {
   return convertedJSON;
 }
 
-packageItems(getLocalStorage("so-cart"));
+// packageItems(getLocalStorage("so-cart"));  // for testing purpose
 
 export default class CheckoutProcess {
   constructor(key, outputSelector) {
@@ -60,7 +60,7 @@ export default class CheckoutProcess {
     );
     //Display
     document.querySelector(`${this.outputSelector} #subtotal`).innerHTML =
-      `$${this.itemTotal}`;
+      `$${this.itemTotal.toFixed(2)}`;
     document.querySelector(`${this.outputSelector} #num-items`).innerHTML =
       `${this.list.length}`; //number of items
   }
