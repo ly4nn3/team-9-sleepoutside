@@ -107,6 +107,13 @@ button {
   border: 0;
   font-size: var(--large-font);
   cursor: pointer;
+  border-radius: 10px;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+  transition: ease-in 0.3s;
+  color: var(--dark-grey);
 }
 
 .divider {
@@ -606,7 +613,28 @@ button {
   background-color: var(--secondary-color);
 }
 
-/* FORM */
+/* Cart Checkout Link */
+.cart-checkout {
+  display: block;
+  text-align: center;
+  margin: 2rem auto;
+  width: 20%;
+  background-color: var(--secondary-color);
+}
+
+.cart-footer a {
+  text-decoration: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+}
+
+.cart-footer a:hover {
+  background-color: var(--primary-color);
+  transition: ease-in 0.5s;
+}
+
+/* CHECKOUT FORM STYLES */
 #checkout-form {
   display: flex;
   flex-direction: column;
@@ -625,25 +653,69 @@ button {
   border: 1px solid var(--dark-grey);
 }
 
+#checkout-form legend {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
 #checkout-form input {
   display: block;
+  width: 100%;
+  line-height: 2rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+input[required] {
+  border-left: 5px solid rgb(224, 0, 0);
+}
+
+input[required]:valid {
+  border-left: 5px solid rgb(22, 151, 22);
+}
+
+input[required]:focus {
+  box-shadow: 0 0 10px var(--tertiary-color);
 }
 
 .summary {
   display: flex;
   flex-direction: column;
+  background-color: #f8f8f8;
+  padding: 10px;
 }
 
 .summary div {
-  margin: 0;
-  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
 }
 
-.summary div:nth-child(odd) {
-  display: inline;
-  margin-bottom: 1rem;
+.summary div span:first-child {
+  font-weight: 600;
+  color: var(--dark-grey);
 }
-/* end form */
+
+.summary div span:last-child {
+  text-align: right;
+  font-family: monospace;
+}
+
+.summary div:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+.summary div:last-child {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 2px dotted #525b0f;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+/* END OF CHECKOUT FORM STYLES */
 
 @media screen and (min-width: 500px) {
   body {
