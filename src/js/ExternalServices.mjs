@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_SERVER_URL
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
 function convertToJson(res) {
   if (res.ok) {
@@ -8,7 +8,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor() {}
 
   async getData(category) {
@@ -24,7 +24,7 @@ export default class ProductData {
       console.error(err);
     }
   }
-  
+
   async findProductById(id) {
     try {
       const response = await fetch(`${baseURL}product/${id}`);
@@ -38,5 +38,16 @@ export default class ProductData {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  async checkout(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
   }
 }

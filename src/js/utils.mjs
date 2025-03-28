@@ -29,9 +29,15 @@ export function getParam(param) {
   return product;
 }
 
-export function renderListWithTemplate(templateFn, parentElement, listData, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  listData,
+  position = "afterbegin",
+  clear = false,
+) {
   // check clear
-  if (clear) parentElement.innerHTML = '';
+  if (clear) parentElement.innerHTML = "";
 
   // // METHOD 1
   // // loop through product data;
@@ -51,7 +57,11 @@ export function renderListWithTemplate(templateFn, parentElement, listData, posi
 
   // METHOD 3
   // using the insert adjacentHtml document element method and array map method
-  listData.map(templateFn).forEach(dataElement => parentElement.insertAdjacentHTML(position, dataElement));
+  listData
+    .map(templateFn)
+    .forEach((dataElement) =>
+      parentElement.insertAdjacentHTML(position, dataElement),
+    );
 }
 
 export function renderWithTemplate(template, parentElement, callback, data) {
@@ -74,25 +84,25 @@ export async function loadTemplate(path) {
     }
 
     throw new Error(`Fetch Error: ${response.status}`);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 }
 
 export async function loadHeaderFooter() {
   // get parent element
-  const parentHeader = document.getElementById('main-header');
-  const parentFooter = document.getElementById('footer');
+  const parentHeader = document.getElementById("main-header");
+  const parentFooter = document.getElementById("footer");
 
   // get path
   const headerPath = "/partials/header.html";
-  const footerPath = "/partials/footer.html"
+  const footerPath = "/partials/footer.html";
 
   // get template
   const header = await loadTemplate(headerPath);
   // console.log(header)  // for testing purpose
   const footer = await loadTemplate(footerPath);
-  
+
   // render template
   renderWithTemplate(header, parentHeader, updateCartCount);
   renderWithTemplate(footer, parentFooter);
@@ -100,7 +110,7 @@ export async function loadHeaderFooter() {
 
 export function getCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
-  return cartItems.reduce((total, item) => total + (item.quantity || 1), 0);    //fix cart bag qty to reflect correct total of items
+  return cartItems.reduce((total, item) => total + (item.quantity || 1), 0); //fix cart bag qty to reflect correct total of items
 }
 
 export function updateCartCount() {
@@ -120,7 +130,11 @@ export function updateCartCount() {
   }
 }
 
-export function generateBreadcrumb(category, productCount = null, isCategory = false) {
+export function generateBreadcrumb(
+  category,
+  productCount = null,
+  isCategory = false,
+) {
   if (!category || typeof category !== "string") {
     console.warn("Invalid catgory provided: ", category);
     return "";
@@ -129,13 +143,14 @@ export function generateBreadcrumb(category, productCount = null, isCategory = f
   try {
     const trimmedCategory = category.trim();
 
-    if (trimmedCategory ==="") {
+    if (trimmedCategory === "") {
       console.warn("Empty category provided: ", category);
       return "";
     }
 
-    const formattedCategory = trimmedCategory.charAt(0).toUpperCase() + trimmedCategory.slice(1);
-    
+    const formattedCategory =
+      trimmedCategory.charAt(0).toUpperCase() + trimmedCategory.slice(1);
+
     let countText = "";
     if (productCount !== null) {
       const count = Number(productCount);
@@ -148,8 +163,8 @@ export function generateBreadcrumb(category, productCount = null, isCategory = f
     }
 
     // linking based on active page
-    const categoryDisplay = isCategory 
-      ? formattedCategory 
+    const categoryDisplay = isCategory
+      ? formattedCategory
       : `<a href="/product_listing/?category=${trimmedCategory}" class="breadcrumb-link">${formattedCategory}</a>`;
 
     return `
@@ -164,11 +179,15 @@ export function generateBreadcrumb(category, productCount = null, isCategory = f
   }
 }
 
-export async function animateCart(addBtnElement, cartElement, productImagePath) {
+export async function animateCart(
+  addBtnElement,
+  cartElement,
+  productImagePath,
+) {
   return new Promise((resolve, reject) => {
     const cartAnimate = document.createElement("div");
     cartAnimate.setAttribute("class", "cartAnimate");
-    cartAnimate.style.zIndex = '2';
+    cartAnimate.style.zIndex = "2";
     const image = document.createElement("img");
     image.src = productImagePath;
     image.alt = "product image";
@@ -176,7 +195,6 @@ export async function animateCart(addBtnElement, cartElement, productImagePath) 
 
     const main = document.querySelector("main");
     main.appendChild(cartAnimate); // add element to document
-
 
     // console.log("ADD BTN ELEMENT: ", addBtnElement);  // for testing purpose
     // console.log("CART ELEMENT: ", cartElement);  // for testing purpose
@@ -205,12 +223,13 @@ export async function animateCart(addBtnElement, cartElement, productImagePath) 
       cartAnimate.style.width = "0";
       cartAnimate.style.height = "0";
       setTimeout(() => {
-        if (main.removeChild(cartAnimate)) { // remove element;
+        if (main.removeChild(cartAnimate)) {
+          // remove element;
           resolve(true);
         } else {
           reject(false);
         }
       }, 500);
     }, duration * 400);
-  })
+  });
 }
