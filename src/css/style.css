@@ -606,6 +606,47 @@ button {
   background-color: var(--secondary-color);
 }
 
+/* FORM */
+#checkout-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 50vw;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 2px solid var(--primary-color);
+
+}
+
+#checkout-form fieldset{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid var(--dark-grey);
+}
+
+#checkout-form input{
+  display: block;
+}
+
+.summary{
+  display: flex;
+  flex-direction: column;
+}
+
+.summary div{
+  margin: 0;
+  padding: 0;
+}
+
+.summary div:nth-child(odd){
+  display: inline;
+  background-color: red;
+  margin-bottom: 1rem ;
+}
+/* end form */
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
