@@ -44,7 +44,7 @@ export default class ShoppingCart {
 
   calculateCartTotal(cartItems) {
     return cartItems
-      .reduce((total, item) => total + item.FinalPrice, 0)
+      .reduce((total, item) => total + (item.FinalPrice * item.quantity || 1), 0)
       .toFixed(2); // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
   }
 
