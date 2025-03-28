@@ -618,7 +618,7 @@ button {
 
 }
 
-#checkout-form fieldset{
+#checkout-form fieldset {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -642,7 +642,6 @@ button {
 
 .summary div:nth-child(odd){
   display: inline;
-  background-color: red;
   margin-bottom: 1rem ;
 }
 /* end form */
@@ -657,7 +656,7 @@ button {
     font-size: 1.2em;
   }
 
-  .cart-card {
+  .cart-card{
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
   }

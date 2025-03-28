@@ -1,44 +1,31 @@
-import ShoppingCart from "./ShoppingCart.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import { getLocalStorage } from "./utils.mjs";
 
-// export default class CheckoutProcess{
-//     constructor(){
+const services = new ExternalServices();
 
-//     }
+// takes the items currently stored in the cart (localstorage) and returns them in a simplified form.
+function packageItems(items) {
+    // convert the list of products from localStorage to the simpler form required for the checkout process.
+    const simplifiedList = items.map(({ Id: id, Name: name, FinalPrice: price, quantity }) => ({ id, name, price, quantity }))
 
-//     init(){
-//         const cartItems = getLocalStorage("so-cart") || [];
-//         console.log(cartItems)
-//         const cart = new ShoppingCart()
-//         const subtotal= cart.calculateCartTotal(cartItems)
-//         this.displayItemSubtotal(subtotal)
+    // An Array.map would be perfect for this process.
+    return simplifiedList;
 
-//         document.querySelector('#zcode').addEventListener('change', () => {
+}
 
-//             this.displayCharges(cartItems, subtotal)
-//         })
+// takes a form element and returns an object where the key is the "name" of the form input.
+function formDataToJSON(formElement) {
+    const formData = new FormData(formElement),
+        convertedJSON = {};
 
-//     }
+    formData.forEach(function (value, key) {
+        convertedJSON[key] = value;
+    });
 
-//     displayItemSubtotal(subtotal){
+    return convertedJSON;
+}
 
-//         //console.log(result)
-
-//         document.querySelector('#subtotal').innerHTML = subtotal
-
-//     }
-
-//     displayCharges(cartItems, subtotal){
-//         const tax = (parseFloat(subtotal * 0.06)).toFixed(2)
-//         document.querySelector('#tax').innerHTML = tax
-//         const shipping = (10 * (cartItems.length/cartItems.length)) + ((cartItems.length - 1) * 2);
-//         document.querySelector('#shipping').innerHTML = shipping
-//         document.querySelector('#total').innerHTML = (parseFloat(subtotal) + parseFloat(tax) + shipping).toFixed(2)
-//     }
-
-
-
-// }
+packageItems(getLocalStorage('so-cart'))
 
 export default class CheckoutProcess {
     constructor(key, outputSelector) {
@@ -55,9 +42,12 @@ export default class CheckoutProcess {
         this.list = getLocalStorage(this.key);
         this.calculateItemSummary();
 
-        //When the zipcode in filled, the other calculations are made;
-        const zcode = document.querySelector(`#zcode`);
-        zcode.addEventListener('change', () => {this.calculateOrderTotal()})
+        document.querySelector('checkout-button').addEventListener('click', (event) => {
+            console.log(event)
+            event.preventDefault();
+            this.checkout();
+        })
+
     }
 
     calculateItemSummary() {
@@ -96,10 +86,32 @@ export default class CheckoutProcess {
         tax.innerText = `$${this.tax.toFixed(2)}`;
         shipping.innerText = `$${this.shipping.toFixed(2)}`;
         total.innerText = `$${this.orderTotal.toFixed(2)}`;
-        
+
     }
+
+    async checkout() {
+        // get the form element data by the form name
+        const form = document.forms['checkout-form'];
+        // convert the form data to a JSON order object using the formDataToJSON function
+        const order = formDataToJSON(form);
+        // populate the JSON order object with the order Date, orderTotal, tax, shipping, and list of items
+
+        order.orderDate = new Date().toISOString();
+        order.orderTotal = this.orderTotal;
+        order.tax = this.tax;
+        order.shipping = this.shipping;
+        order.items = packageItems(this.list);
+
+        // call the checkout method in the ExternalServices module and send it the JSON order data.
+
+        try {
+            const response = await services.checkout(order);
+            console.log(response);
+          } catch (err) {
+            console.log(err);
+          }
+    }
+
 }
 
 
-const checkout = new CheckoutProcess('so-cart', '.summary')
-checkout.init()
