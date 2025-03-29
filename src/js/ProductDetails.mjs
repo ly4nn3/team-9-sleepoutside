@@ -98,9 +98,10 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  return `<section class="product-detail"> 
+  return `<section class="product-detail">
     <h3>${product.Brand.Name}</h3>
     <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <div class="discount-label"><span>Discount: -$${(product.SuggestedRetailPrice - product.FinalPrice).toFixed(2)}</span></div> 
     <img
       class="divider"
       src="${product.Images.PrimaryLarge}"
