@@ -284,3 +284,60 @@ export function removeAllAlert(fixedAlert=true) {
       }
     })
 }
+
+// LARGE DISPLAY POPUP
+export class LargePopUp {
+    constructor() {
+        this.isClosed = true;
+        this.mainFrame = document.createElement("div");
+        this.screen = document.createElement("div");
+        this.closeBtn = document.createElement("button");
+
+        this.init();
+    }
+
+    init() {
+        // set attributes
+        this.mainFrame.setAttribute("class", "largePopUpMainFrame");
+        this.screen.setAttribute("class", "largePopUpScreen");
+        this.closeBtn.setAttribute("class", "largePopUpCloseBtn");
+        this.closeBtn.innerHTML = "⨉";
+
+        // set listener
+        this.closeBtn.addEventListener("click", ()=> {
+            if (!this.isClosed) {
+                  if (this.close()) {
+                      // update isClosed
+                      this.isClosed = true;
+                  }
+            }
+        })
+
+        // append elements
+        this.mainFrame.appendChild(this.screen);
+        this.mainFrame.appendChild(this.closeBtn);
+    }
+
+    display(htmlElement_or_template) {
+        if (typeof(htmlElement_or_template) == "object") {
+            // add content to screen
+            this.screen.appendChild(htmlElement_or_template);
+        } else {
+            this.screen.innerHTML = htmlElement_or_template
+        }
+
+        // add main frame to display
+        document.body.prepend(this.mainFrame);
+
+        // update isClosed
+        this.isClosed = false;
+    }
+
+    close() {
+        if (document.body.contains(this.mainFrame)) {
+            document.body.removeChild(this.mainFrame);
+            return true;
+        }
+        return false;
+    }
+}
