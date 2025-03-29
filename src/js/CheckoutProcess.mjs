@@ -1,5 +1,5 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage } from "./utils.mjs";
+import { alertMessage, getLocalStorage, removeAllAlert, setLocalStorage } from "./utils.mjs";
 
 const services = new ExternalServices();
 
@@ -56,7 +56,7 @@ export default class CheckoutProcess {
     //Calculate
     this.itemTotal = this.list.reduce(
       //accumulator + (price * quantity), starting at 0
-      (acc, current) => acc + (current.FinalPrice * current.quantity),
+      (acc, current) => acc + current.FinalPrice,
       0,
     );
     //Display
@@ -100,20 +100,43 @@ export default class CheckoutProcess {
     // in case of form missing
     if (form) {
       const formData = formDataToJSON(form);
+      // assign the correct format of expiration data
+      const expiration = formData.expiration;
+      const [year, month] = expiration.split('-').map(Number);
+      // console.log("Year: ", String(year).slice(-2), "Month: ", month);  // for testing purpose
+      formData.expiration = `${month}/${String(year).slice(-2)}`;
       // populate the JSON order object with the order Date, orderTotal, tax, shipping, and list of items
       formData.orderDate = new Date().toISOString();
       formData.orderTotal = this.orderTotal;
       formData.tax = this.tax;
       formData.shipping = this.shipping;
       formData.items = packageItems(this.list);
-
-      // call the checkout method in the ExternalServices module and send it the JSON order data.
+      // console.log("FORM DATA: ", formData);  // for testing purpose
 
       try {
         const response = await services.checkout(formData);
-        console.log(response);
+        // console.log(response);
+        if (response.orderId) {
+            // clear storage
+            setLocalStorage("so-cart", []);
+            // clear form
+            Object.keys(formData).forEach((key) => {
+                if (form.elements[`${key}`]) {
+                  form.elements[`${key}`].value = "";
+                }
+            })
+
+            const urlParam = encodeURI(`name=${formData.fname}&msg=${response.message}`);
+            open(`../checkout/success.html?${urlParam}`, "_self");
+        }
       } catch (err) {
-        console.error(err);
+        console.error(err);  // for debugging purpose
+        // remove all previous alerts
+        removeAllAlert(true);
+        // get adn display error messages
+        Object.values(err.message).forEach(errorMsg => {
+            alertMessage(errorMsg, false);
+        })
       }
     } else {
       console.error("Form not found");

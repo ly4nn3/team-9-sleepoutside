@@ -14,15 +14,18 @@
   <body>
     <header id="main-header" class="divider"></header>
 
-    <main class="divider">
-      <h1>Thank You!</h1>
-      <p>
-        The order was succesfully send with your data. You will receive tracking
-        Information from us. Please verify your email.
-      </p>
+    <main class="divider checkout-success-main">
+      <div id="checkout-success">
+        <h2>SUCCESS</h2>
+        <span>✅</span>
+        <p id="response-msg">
+          <!-- DYNAMICALLY UPDATE -->
+        </p>
+        <p>Thanks <span id="user-name"></span>, for shopping with us!</p>
+      </div>
     </main>
 
     <footer id="footer"></footer>
   </body>
-  <script src="../js/success.js" type="module"></script>
+  <script src="../js/checkout-success.js" type="module"></script>
 </html>

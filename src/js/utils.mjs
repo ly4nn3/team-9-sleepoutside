@@ -92,7 +92,7 @@ export async function loadHeaderFooter() {
 
 export function getCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
-  return cartItems.reduce((total, item) => total + (item.quantity || 1), 0); //fix cart bag qty to reflect correct total of items
+  return cartItems.reduce((total, item) => total + (item.Quantity || 1), 0); //fix cart bag qty to reflect correct total of items
 }
 
 export function updateCartCount() {
@@ -216,23 +216,71 @@ export async function animateCart(
   });
 }
 
-export function alertMessage(message, scroll=true){
-  const main = document.querySelector('main');
+export function checkRegex(inputElement, regex, validMsg="Valid", failMsg="Invalid input") {
+    if (regex.test(inputElement.value)) {
+        inputElement.title = validMsg;
+        inputElement.setCustomValidity("");
+        return true;
+    } else {
+        inputElement.setCustomValidity(failMsg);
+        inputElement.focus();
+        inputElement.title = failMsg;
+        return false;
+    }
+}
 
-  const alert = document.createElement('div');
-  // add a class to style the alert
-  alert.classList.add('alertMessage');
+export function alertMessage(message, scroll=true, disapear=5000) {
+    const fixedAlertsHolderId = "#fixed-alerts-holder";  // use for holder non-scrolling alert
 
-  alert.innerHTML = `${message} <div class="closeButton">X</div>`
+    const alertHolder = document.createElement("div");
+    alertHolder.setAttribute("class", "alertHolder");
 
+    const alertCloseBtn = document.createElement("button");
+    alertCloseBtn.setAttribute("class", "alertCloseBtn");
+    alertCloseBtn.innerHTML = "⨉";
+    alertCloseBtn.addEventListener("click", ()=> {
+      scroll ? document.body.removeChild(alertHolder) : document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
+    })
 
+    const alertMsgHolder = document.createElement("span");
+    alertMsgHolder.innerHTML = message;
 
-  main.prepend(alert)
+    // append elements
+    alertHolder.appendChild(alertMsgHolder);
+    alertHolder.appendChild(alertCloseBtn);
 
-  const closeButton = document.querySelector('.closeButton');
-  closeButton.addEventListener('click', () => {
-    main.removeChild(alert)
-  })
+    if (scroll) {
+        document.querySelector("main").insertAdjacentElement("beforebegin", alertHolder);
+        window.scrollTo({ top: 0, behavior: "smooth"});
+    } else {
+        document.querySelector(fixedAlertsHolderId).appendChild(alertHolder);
+    }
 
-  if (scroll) window.scrollTo(0,0);
+    // remove error withing some time
+    if (typeof(disapear) == "number" && disapear != null) {
+        setTimeout(() => {
+            const animationTime = 2;
+            alertHolder.style.transition = `opacity ${animationTime}s`;
+            alertHolder.style.opacity = "0";
+            setTimeout(() => {
+              if (scroll) {
+                if (document.body.contains(alertHolder)) document.body.removeChild(alertHolder);
+              } else {
+                if (document.querySelector(fixedAlertsHolderId).contains(alertHolder)) document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
+              }
+            }, animationTime * 1000);
+        }, disapear);
+    }
+}
+
+export function removeAllAlert(fixedAlert=true) {
+  const alertHolderClass = ".alertHolder";
+    const fixedAlertsHolderId = "#fixed-alerts-holder";  // use for holder non-scrolling alert
+    document.querySelectorAll(alertHolderClass).forEach(alert => {
+      if (fixedAlert) {
+        document.querySelector(fixedAlertsHolderId).removeChild(alert);
+      } else {
+        document.body.removeChild(alert)
+      }
+    })
 }

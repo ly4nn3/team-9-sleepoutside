@@ -11,7 +11,7 @@ export default class ShoppingCart {
   init() {
     loadHeaderFooter(); // required to update cart count
     const cartItems = getLocalStorage("so-cart") || []; // return empty array [] if cart is null.
-    // console.log(cartItems);
+    console.log(cartItems);
 
     // render cart items or display empty
     // console.log(cartItems.length);
@@ -44,7 +44,7 @@ export default class ShoppingCart {
 
   calculateCartTotal(cartItems) {
     return cartItems
-      .reduce((total, item) => total + (item.FinalPrice * item.quantity || 1), 0)
+      .reduce((total, item) => total + (item.FinalPrice), 0)
       .toFixed(2); // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
   }
 
@@ -90,9 +90,9 @@ function cartItemTemplate(item) {
         <p class="cart-card__color">${item.Colors[0].ColorName}</p>
 
         <div class="cart-card_details">
-            <p class="cart-card__quantity">qty:${item.quantity || 1}</p>
-            <p class="cart-card__price">Price: $${item.FinalPrice}</p>            
-            <p class="cart-card__price">Total: $${(item.FinalPrice * (item.quantity || 1)).toFixed(2)}</p>
+            <p class="cart-card__quantity">qty:${item.Quantity || 1}</p>
+            <p class="cart-card__price">Price: $${item.ListPrice}</p>            
+            <p class="cart-card__price">Total: $${(item.FinalPrice).toFixed(2)}</p>
         </div>
 
         <button class="remove-item" data-id="${item.Id}">X</button>    
