@@ -56,7 +56,7 @@ export default class CheckoutProcess {
     //Calculate
     this.itemTotal = this.list.reduce(
       //accumulator + (price * quantity), starting at 0
-      (acc, current) => acc + (current.FinalPrice * current.quantity),
+      (acc, current) => acc + current.FinalPrice,
       0,
     );
     //Display
