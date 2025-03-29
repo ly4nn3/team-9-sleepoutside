@@ -18,7 +18,7 @@
       <section class="products checkout-header">
         <h2>Review & Place your Order</h2>
       </section>
-      <form action="#" name="checkout-form" id="checkout-form">
+      <form action="./success.html" name="checkout-form" id="checkout-form">
         <fieldset>
           <legend>Customer Information</legend>
           <label>
@@ -67,15 +67,27 @@
           <legend>Payment Information</legend>
           <label>
             Card Number
-            <input type="text" name="cardNumber" id="cardNumber" required />
+            <input
+              type="text"
+              name="cardNumber"
+              id="cardNumber"
+              pattern="1234123412341234"
+              required
+            />
           </label>
           <label>
             Expiration Date
-            <input type="text" name="expiration" id="expiration" required />
+            <input
+              type="text"
+              name="expiration"
+              id="expiration"
+              pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+              required
+            />
           </label>
           <label>
             CVV
-            <input type="number" name="code" id="code" required />
+            <input type="number" name="code" id="code" pattern="^\d{3,4}$" required />
           </label>
         </fieldset>
 
@@ -85,9 +97,7 @@
           <div><span>Items:</span> <span id="num-items"></span></div>
           <div><span>Subtotal:</span> <span id="subtotal"></span></div>
           <div><span>Tax:</span> <span id="tax"></span></div>
-          <div>
-            <span>Shipping Estimate:</span> <span id="shipping"></span>
-          </div>
+          <div><span>Shipping Estimate:</span> <span id="shipping"></span></div>
           <div><span>Order Total:</span> <span id="total"></span></div>
         </fieldset>
 
