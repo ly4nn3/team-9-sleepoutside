@@ -297,23 +297,45 @@ export class LargePopUp {
     }
 
     init() {
-        // set attributes
+        // SET ATTRIBUTES
         this.mainFrame.setAttribute("class", "largePopUpMainFrame");
         this.screen.setAttribute("class", "largePopUpScreen");
         this.closeBtn.setAttribute("class", "largePopUpCloseBtn");
         this.closeBtn.innerHTML = "⨉";
 
-        // set listener
+        // SET LISTENERS
+        // close with closeBtn
         this.closeBtn.addEventListener("click", ()=> {
-            if (!this.isClosed) {
-                  if (this.close()) {
-                      // update isClosed
-                      this.isClosed = true;
-                  }
+            this.close();
+        })
+
+        // close with escape key press
+        document.addEventListener("keyup", (event) => {
+            if (event.key == "Escape") {
+                this.close();
             }
         })
 
-        // append elements
+        // close screen on screen click outside content
+        this.screen.addEventListener("click", (event)=> {
+            if (this.screen.children[0]) {
+                const contentHolder = this.screen.children[0];
+                // get contetHolder boundary
+                const boundary = contentHolder.getBoundingClientRect();
+                const isInBoundry = (
+                  event.clientX >= boundary.left &&
+                  event.clientX <= boundary.right &&
+                  event.clientY >= boundary.top &&
+                  event.clientY <= boundary.bottom
+                );
+
+                if (!isInBoundry) {
+                    this.close();
+                }
+            }
+        })
+
+        // APPEND ELEMENTS
         this.mainFrame.appendChild(this.screen);
         this.mainFrame.appendChild(this.closeBtn);
     }
@@ -334,10 +356,15 @@ export class LargePopUp {
     }
 
     close() {
-        if (document.body.contains(this.mainFrame)) {
-            document.body.removeChild(this.mainFrame);
-            return true;
+        if (!this.isClosed) {
+            if (document.body.contains(this.mainFrame)) {
+                document.body.removeChild(this.mainFrame);
+                // update isClosed
+                this.isClosed = true;
+                return true;
+            }
         }
+
         return false;
     }
 }
