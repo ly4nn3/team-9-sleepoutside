@@ -186,6 +186,42 @@ form input[required]:focus {
   box-shadow: 0 0 10px var(--tertiary-color);
 }
 
+/* Alert Styling */
+#fixed-alerts-holder {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 2;
+}
+
+.alertHolder {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 90%;
+  max-width: 500px;
+  padding: var(--base-padding);
+  background: repeating-linear-gradient(
+    rgba(150, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.9)
+  );
+  border-radius: 5px;
+  margin: var(--base-margin);
+  justify-self: center;
+  color: white;
+  box-shadow: 0 0 5px #000;
+  z-index: 2;
+}
+
+.alertHolder button {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alertHolder span {
+  margin: auto 0;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */
@@ -684,7 +720,7 @@ form input[required]:focus {
   display: block;
   text-align: center;
   margin: 2rem auto;
-  width: 20%;
+  width: fit-content;
   background-color: var(--secondary-color);
 }
 
@@ -748,6 +784,34 @@ form input[required]:focus {
 }
 
 /* END OF CHECKOUT FORM STYLES */
+
+/* Checkout Success Styling */
+.checkout-success-main {
+  display: grid;
+  height: 70vh;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+#checkout-success {
+  display: block;
+  width: 80%;
+  height: fit-content;
+  align-self: center;
+  max-width: 500px;
+  padding: var(--large-padding);
+  border-radius: 15px;
+  box-shadow: 0 0 10px;
+}
+
+#checkout-success > span {
+  font-size: 3em;
+}
+
+#checkout-success > p {
+  text-transform: capitalize;
+}
 
 @media screen and (min-width: 500px) {
   body {
