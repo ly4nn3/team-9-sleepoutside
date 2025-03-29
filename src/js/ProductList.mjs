@@ -1,5 +1,5 @@
 // use strict
-import { renderListWithTemplate, generateBreadcrumb } from "./utils.mjs";
+import { renderListWithTemplate, generateBreadcrumb, LargePopUp } from "./utils.mjs";
 
 export default class ProductList {
   // constructor for geting parameter in a class
@@ -8,6 +8,7 @@ export default class ProductList {
     this.dataSource = dataSource; // get the source of the data i.e the path to the data
     this.sortElement = sortElement; // for sorting data
     this.listElement = listElement; // holds the document element to be used in pupulating the data
+    this.largePopUp = new LargePopUp;
   }
 
   // init needed for initial call after instantiating a class
@@ -36,7 +37,7 @@ export default class ProductList {
     this.sortList(productsData);
 
     //initialize the search function
-    searchProduct();
+    searchProduct();    
   }
 
   // renderList to rendering (i.e displaying) product in the page
@@ -48,6 +49,15 @@ export default class ProductList {
       undefined,
       true,
     );
+
+    // Add Listners to rendered view details btn
+    productListData.forEach((product)=> {
+        // set listner for each button
+        // console.log("product-id: ", product.Id);  // for testing purpose
+        document.getElementById(product.Id).addEventListener("click", ()=> {
+            this.largePopUp.display(productDetailTemplate(product));
+        })
+    })
   }
 
   sortList(productsData) {
@@ -230,12 +240,13 @@ function productCardTemplate(product) {
                                     <h2 class="card__name">${product.NameWithoutBrand}</h2>
                                     <p class="product-card__price">$${product.ListPrice}</p>
                                 </a>
+                                <span id="${product.Id}" class="product-look-up-btn">View Details</span>
                             </li>`;
   } else {
     //This is the template for products whose Retail Price is less from the Final Price
     productTemplate = `<li class="product-card">
                                 <a href="/product_pages/?product=${product.Id}">
-                                <div class="discount-label"><span>Discount</span></div>
+                                    <div class="discount-label"><span>Discount</span></div>
                                     <img
                                         src="${product.Images.PrimaryMedium}"
                                         alt="${product.Name}"
@@ -245,8 +256,28 @@ function productCardTemplate(product) {
                                     <small><del>$${product.SuggestedRetailPrice}</del> <span class="discount-price">- Save ${(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100).toFixed(0)}%</span> </small>
                                     <p class="product-card__price">$${product.ListPrice}</p>
                                 </a>
+                                <span id="${product.Id}" class="product-look-up-btn">View Details</span>
                             </li>`;
   }
 
   return productTemplate;
+}
+
+function productDetailTemplate(product) {
+  return `<section class="product-detail product-detail-quick-lookup"> 
+    <h3>${product.Brand.Name}</h3>
+    <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <img
+      class="divider"
+      src="${product.Images.PrimaryLarge}"
+      alt="${product.NameWithoutBrand}"
+    />
+    <div class="product-discount">
+      <del><b>Price:</b> $${product.SuggestedRetailPrice}</del>
+      <span class="spacing"> - </span>
+      <span><b>Discount:</b> ${(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100).toFixed(0)}%</span>
+    </div>
+    <p class="product-card__price"><b>Final Price: </b>$${product.FinalPrice}</p>
+    <p class="product__color">${product.Colors[0].ColorName}</p>
+    <p class="product__description">${product.DescriptionHtmlSimple}</p>`;
 }
