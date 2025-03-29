@@ -113,7 +113,7 @@ export default class CheckoutProcess {
         const response = await services.checkout(formData);
         console.log(response);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     } else {
       console.error("Form not found");
