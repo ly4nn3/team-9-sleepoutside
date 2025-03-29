@@ -94,6 +94,21 @@ header {
 }
 
 /* utility classes */
+.alertMessage {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  max-width: 20rem;
+  margin: 1rem auto;
+  padding: 5px;
+  border: 1px solid var(--secondary-color);
+  background-color: var(--primary-color);
+}
+
+.closeButton {
+  cursor: pointer;
+}
+
 .highlight {
   color: var(--tertiary-color);
 }
