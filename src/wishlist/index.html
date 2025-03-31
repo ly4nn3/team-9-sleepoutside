@@ -1,36 +1,25 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Sleep Outside | Cart</title>
-
+    <title>Sleep Outside | Wishlist</title>
     <link rel="stylesheet" href="/css/style.css" />
-
-    <script src="../js/cart.js" type="module"></script>
   </head>
 
   <body>
     <div id="fixed-alerts-holder"></div>
     <header id="main-header" class="divider"></header>
-
     <main class="divider">
       <section class="products">
-        <h2>My Cart</h2>
-
+        <h2>My Wishlist</h2>
         <ul class="product-list">
           <!-- DYNAMICALLY UPDATE -->
         </ul>
-        <div class="cart-footer hide">
-          <p class="cart-total"><b>Total</b>: $</p>
-          <a class="cart-checkout" href="../checkout/index">Checkout</a>
-        </div>
+        <div class="wishlist-footer hide"></div>
       </section>
     </main>
-
     <footer id="footer"></footer>
   </body>
+  <script src="../js/wishlist.js" type="module"></script>
 </html>

@@ -69,7 +69,8 @@ export default class ProductDetails {
         }
         existingItem.Quantity += 1;
         // update final price
-        existingItem.FinalPrice = existingItem.ListPrice * existingItem.Quantity;
+        existingItem.FinalPrice =
+          existingItem.ListPrice * existingItem.Quantity;
       } else {
         //if duplicate item is not already in cart, then add it with quantity = 1
         const newProduct = { ...this.product, Quantity: 1 };

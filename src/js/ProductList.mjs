@@ -1,5 +1,9 @@
 // use strict
-import { renderListWithTemplate, generateBreadcrumb, LargePopUp } from "./utils.mjs";
+import {
+  renderListWithTemplate,
+  generateBreadcrumb,
+  LargePopUp,
+} from "./utils.mjs";
 
 export default class ProductList {
   // constructor for geting parameter in a class
@@ -8,7 +12,7 @@ export default class ProductList {
     this.dataSource = dataSource; // get the source of the data i.e the path to the data
     this.sortElement = sortElement; // for sorting data
     this.listElement = listElement; // holds the document element to be used in pupulating the data
-    this.largePopUp = new LargePopUp;
+    this.largePopUp = new LargePopUp();
   }
 
   // init needed for initial call after instantiating a class
@@ -37,7 +41,7 @@ export default class ProductList {
     this.sortList(productsData);
 
     //initialize the search function
-    searchProduct();    
+    searchProduct();
   }
 
   // renderList to rendering (i.e displaying) product in the page
@@ -51,13 +55,13 @@ export default class ProductList {
     );
 
     // Add Listners to rendered view details btn
-    productListData.forEach((product)=> {
-        // set listner for each button
-        // console.log("product-id: ", product.Id);  // for testing purpose
-        document.getElementById(product.Id).addEventListener("click", ()=> {
-            this.largePopUp.display(productDetailTemplate(product));
-        })
-    })
+    productListData.forEach((product) => {
+      // set listner for each button
+      // console.log("product-id: ", product.Id);  // for testing purpose
+      document.getElementById(product.Id).addEventListener("click", () => {
+        this.largePopUp.display(productDetailTemplate(product));
+      });
+    });
   }
 
   sortList(productsData) {
