@@ -86,7 +86,10 @@ export async function loadHeaderFooter() {
   const footer = await loadTemplate(footerPath);
 
   // render template
-  renderWithTemplate(header, parentHeader, updateCartCount);
+  renderWithTemplate(header, parentHeader, () => {
+    updateCartCount();
+    updateWishlistCount();
+  });
   renderWithTemplate(footer, parentFooter);
 }
 
@@ -109,6 +112,28 @@ export function updateCartCount() {
     countSpan.className = "cart-count";
     countSpan.textContent = cartCount;
     cartElement.appendChild(countSpan);
+  }
+}
+
+export function getWishlistCount() {
+  const wishlistItems = getLocalStorage("so-wishlist") || [];
+  return wishlistItems.length;
+}
+
+export function updateWishlistCount() {
+  const wishlistCount = getWishlistCount();
+  const wishlistElement = document.querySelector(".wishlist");
+
+  const hasCount = wishlistElement.querySelector(".wishlist-count");
+  if (hasCount) {
+    hasCount.remove();
+  }
+
+  if (wishlistCount > 0) {
+    const countSpan = document.createElement("span");
+    countSpan.className = "wishlist-count";
+    countSpan.textContent = wishlistCount;
+    wishlistElement.appendChild(countSpan);
   }
 }
 

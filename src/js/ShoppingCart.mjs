@@ -1,6 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-import { loadHeaderFooter } from "./utils.mjs";
-
+import { loadHeaderFooter, getLocalStorage, setLocalStorage, alertMessage, updateWishlistCount, LargePopUp } from "./utils.mjs";
 export default class ShoppingCart {
   constructor(productListElement, cartTotalHolder, cartTotalElement) {
     this.productListElement = productListElement;
@@ -34,6 +32,12 @@ export default class ShoppingCart {
           this.removeItemFromCart(event),
         );
       });
+
+      // wishlist button
+      document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+        button.addEventListener("click", (event) => this.moveToWishlist(event));
+      });
+
     } else {
       // display empty
       this.productListElement.innerHTML = cartEmptyTemplate();
@@ -70,6 +74,62 @@ export default class ShoppingCart {
     // remove item from view
     this.init();
   }
+
+  moveToWishlist(event) {
+    // console.log("Wishlist button clicked");
+    const productId = event.target.getAttribute("data-id");
+    // console.log("Product ID:", productId);
+    const cart = getLocalStorage("so-cart") || [];
+    const wishlist = getLocalStorage("so-wishlist") || [];
+
+    const item = cart.find(item => item.Id === productId);
+    // console.log("Item found:", item);
+
+    if (item) {
+      const existingWishListItem = wishlist.find(wishlistItem => wishlistItem.Id === productId);
+
+      if (!existingWishListItem) {
+        // Add to wishlist
+        wishlist.push(item);
+        setLocalStorage("so-wishlist", wishlist);
+
+        event.target.textContent = "❤️";
+        updateWishlistCount();
+        
+        // Create and show confirmation popup
+        const popup = new LargePopUp();
+        const contentElement = document.createElement("div");
+        contentElement.className = "wishlist-confirmation";
+        contentElement.innerHTML = `
+          <div class="wishlist-popup-content">
+            <p>Item added to wishlist!</p>
+            <p>Would you like to remove it from cart?</p>
+            <div class="wishlist-confirmation__buttons">
+              <button class="btn-remove">Remove</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </div>
+        `;
+
+        // Add event listeners
+        contentElement.querySelector('.btn-remove').addEventListener('click', () => {
+          this.removeItemFromCart({ target: { getAttribute: () => productId } });
+          popup.close();
+          alertMessage("Item removed from cart!", false, 2000);
+        });
+
+        contentElement.querySelector('.btn-cancel').addEventListener('click', () => {
+          popup.close();
+          alertMessage("Item kept in cart!", false, 2000);
+        });
+
+        popup.display(contentElement);
+        alertMessage("Item added to wishlist!", false, 2000);
+      } else {
+        alertMessage("Item already in wishlist!", false, 2000);
+      }
+    }
+  }
 }
 
 /**********************************
@@ -77,6 +137,13 @@ export default class ShoppingCart {
  **********************************/
 // display cart items                   // shows item details in div to adjust in css
 function cartItemTemplate(item) {
+  // wishlist heart state
+  const wishlist = getLocalStorage("so-wishlist") || [];
+  const isInWishlist= wishlist.some(wishlistItem => wishlistItem.Id === item.Id);
+  const heartSymbol = isInWishlist ? "❤️" : "🤍";
+  const wishlistClass = isInWishlist ? "add-to-wishlist in-wishlist" : "add-to-wishlist";
+
+
   return `<li class="cart-card divider" id="${item.Id}">
         <a href="#" class="cart-card__image">
             <img
@@ -95,9 +162,12 @@ function cartItemTemplate(item) {
             <p class="cart-card__price">Total: $${(item.FinalPrice).toFixed(2)}</p>
         </div>
 
-        <button class="remove-item" data-id="${item.Id}">X</button>    
-                    
+        <div class="cart-card__actions">
+          <button class="add-to-wishlist" data-id="${item.Id}">${heartSymbol}</button>
+          <button class="remove-item" data-id="${item.Id}">X</button>    
+        </div>     
         </li>`; // ^--created X button next to each item in cart for item removal; adjusted to show actual qty and total price
+        // ^--added wishlist button
 }
 
 // display empty cart
