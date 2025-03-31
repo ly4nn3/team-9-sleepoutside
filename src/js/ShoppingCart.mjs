@@ -40,6 +40,12 @@ export default class ShoppingCart {
         );
       });
 
+      document.querySelectorAll(".quantity-input").forEach((input) => {
+        input.addEventListener("change", (event) => this.updateItemQuantity(event)
+        );
+      });
+
+
       // wishlist button
       document.querySelectorAll(".add-to-wishlist").forEach((button) => {
         button.addEventListener("click", (event) => this.moveToWishlist(event));
@@ -54,7 +60,11 @@ export default class ShoppingCart {
 
   calculateCartTotal(cartItems) {
     return cartItems
-      .reduce((total, item) => total + item.FinalPrice, 0)
+      .reduce((total, item) => {
+        const qty = item.Quantity || 1;
+        return total + (item.ListPrice * qty);    //changed to ListPrice to ensure correct calculating
+      }, 0)
+
       .toFixed(2); // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
   }
 
@@ -80,6 +90,29 @@ export default class ShoppingCart {
     // remove item from view
     this.init();
   }
+
+  //function to update the qty of the items in the cart
+  updateItemQuantity(event) {
+    const productId = event.target.getAttribute("data-id");
+    const newQty = parseInt(event.target.value);
+    
+    let cartItems = getLocalStorage("so-cart") || [];
+
+    const itemIndex = cartItems.findIndex(item => item.Id === productId);
+
+    if (itemIndex !== -1 && newQty >= 1) {
+      const item = cartItems[itemIndex];
+
+      item.Quantity = newQty;
+      item.FinalPrice = item.ListPrice * newQty;
+      cartItems[itemIndex] = item;
+      
+      setLocalStorage("so-cart", cartItems);
+
+      this.init();
+    }
+  }
+
 
   moveToWishlist(event) {
     // console.log("Wishlist button clicked");
@@ -174,7 +207,16 @@ function cartItemTemplate(item) {
         <p class="cart-card__color">${item.Colors[0].ColorName}</p>
 
         <div class="cart-card_details">
-            <p class="cart-card__quantity">qty:${item.Quantity || 1}</p>
+            <label>
+            Qty:
+            <input
+            type="number"
+            class="quantity-input"
+            data-id="${item.Id}"
+            min="1"
+            value="${item.Quantity || 1}" />
+
+
             <p class="cart-card__price">Price: $${item.ListPrice}</p>            
             <p class="cart-card__price">Total: $${item.FinalPrice.toFixed(2)}</p>
         </div>

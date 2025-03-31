@@ -859,6 +859,7 @@ form input[required]:focus {
   flex-direction: column;
   gap: 0.25rem;
   margin: 0.5rem 0;
+
 }
 
 .cart-footer {
@@ -1159,4 +1160,53 @@ footer {
   height: fit-content;
   justify-self: center;
   align-self: center;
+}
+
+/***************************************
+*** POPUP AND EXTRAL DISPLAY STYLING ***
+***************************************/
+.largePopUpMainFrame {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.8);
+  display: grid;
+  z-index: 999;
+  left: 0;
+  overflow: auto;
+}
+
+.largePopUpMainFrame > * {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+.largePopUpMainFrame .largePopUpCloseBtn {
+  width: 40px;
+  height: 40px;
+  margin: var(--large-margin);
+  padding: 0;
+  border-radius: 100%;
+  background: var(--light-grey);
+  color: var(--dark-grey);
+  justify-self: self-end;
+  position: fixed;
+}
+
+.largePopUpMainFrame .largePopUpScreen {
+  width: 100%;
+  display: block;
+  height: fit-content;
+  justify-self: center;
+  align-self: center;
+}
+
+/*CART QUANTITY STYLING*/
+.quantity-input {
+  width: 50px;
+  padding: 4px;
+  font-size: 1em;
+  border: 2px solid var(--secondary-color);
+  border-radius: 5px;
+  margin-bottom: 0.8rem;
 }
