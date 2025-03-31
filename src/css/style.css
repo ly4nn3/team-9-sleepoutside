@@ -37,6 +37,8 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
+  position: relative;
+  z-index: 1001;
 }
 
 .logo {
@@ -221,7 +223,7 @@ form input[required]:focus {
   position: fixed;
   width: 100%;
   left: 0;
-  z-index: 2;
+  z-index: 1000;
 }
 
 .alertHolder {
@@ -327,6 +329,7 @@ form input[required]:focus {
   border-radius: 100%;
   box-shadow: 0 0 15px;
   overflow: hidden;
+  z-index: 998;
 }
 
 .cartAnimate img {
@@ -1128,7 +1131,7 @@ footer {
   height: 100vh;
   background: rgba(255, 255, 255, 0.8);
   display: grid;
-  z-index: 3;
+  z-index: 999;
   left: 0;
   overflow: auto;
 }
