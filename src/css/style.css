@@ -200,6 +200,22 @@ form input[required]:valid {
 form input[required]:focus {
   box-shadow: 0 0 10px var(--tertiary-color);
 }
+/* END GENERAL FORM STYLING */
+/* Newsletter Form */
+
+.newsletter{
+  margin: 1rem ;
+}
+
+.newsletter-form{
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  max-width: 20rem;
+}
+
+/* End Newsletter Form */
 
 /* Alert Styling */
 #fixed-alerts-holder {

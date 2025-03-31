@@ -34,94 +34,115 @@
         <h2>What We Offer</h2>
         <div class="product-categories">
           <a
-            href="/product_listing/?category=tents"
-            onmouseenter="displayDescription(`tent-description`)"
-            onmouseleave="removeDescription(`tent-description`)"
+          href="/product_listing/?category=tents"
+          onmouseenter="displayDescription(`tent-description`)"
+          onmouseleave="removeDescription(`tent-description`)"
           >
-            <div class="category-holder">
-              <img
-                src="/images/categories/category-tents.svg"
-                alt="image of a tent"
-                sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
-              />
-              <div class="category-description" id="tent-description">
-                <p>
-                  Durable, weather-resistant shelters designed for every
-                  adventure, from solo treks to family camping trips. Stay
-                  protected and comfortable under the stars
-                </p>
-              </div>
+          <div class="category-holder">
+            <img
+            src="/images/categories/category-tents.svg"
+            alt="image of a tent"
+            sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
+            />
+            <div class="category-description" id="tent-description">
+              <p>
+                Durable, weather-resistant shelters designed for every
+                adventure, from solo treks to family camping trips. Stay
+                protected and comfortable under the stars
+              </p>
             </div>
-            <h3>Tents</h3>
-          </a>
-          <a
-            href="/product_listing/?category=backpacks"
-            onmouseenter="displayDescription(`backpack-description`)"
-            onmouseleave="removeDescription(`backpack-description`)"
-          >
-            <div class="category-holder">
-              <img
-                src="/images/categories/category-backpacks.svg"
-                alt="image of a backpack"
-                sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
-              />
-              <div class="category-description" id="backpack-description">
-                <p>
-                  Lightweight and spacious packs built for hiking, camping, and
-                  travel. Carry all your essentials with ease and ergonomic
-                  support
-                </p>
-              </div>
-            </div>
-            <h3>Backpacks</h3>
-          </a>
-          <a
-            href="/product_listing/?category=sleeping-bags"
-            onmouseenter="displayDescription(`sleeping-bag-description`)"
-            onmouseleave="removeDescription(`sleeping-bag-description`)"
-          >
-            <div class="category-holder">
-              <img
-                src="/images/categories/category-sleepingbags.svg"
-                alt="image of a sleeping-bag"
-                sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
-              />
-              <div class="category-description" id="sleeping-bag-description">
-                <p>
-                  Insulated and cozy sleeping solutions for all seasons. Stay
-                  warm and comfortable whether you're camping in the summer or
-                  braving the winter cold
-                </p>
-              </div>
-            </div>
-            <h3>Sleeping Bags</h3>
-          </a>
-          <a
-            href="/product_listing/?category=hammocks"
-            onmouseenter="displayDescription(`hammock-description`)"
-            onmouseleave="removeDescription(`hammock-description`)"
-          >
-            <div class="category-holder">
-              <img
-                src="/images/categories/category-hammocks.svg"
-                alt="image of a Hammock"
-                sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
-              />
-              <div class="category-description" id="hammock-description">
-                <p>
-                  Relax in the great outdoors with sturdy, portable hammocks.
-                  Perfect for lounging at the campsite, beach, or backyard
-                </p>
-              </div>
-            </div>
-            <h3>Hammocks</h3>
-          </a>
+          </div>
+          <h3>Tents</h3>
+        </a>
+        <a
+        href="/product_listing/?category=backpacks"
+        onmouseenter="displayDescription(`backpack-description`)"
+        onmouseleave="removeDescription(`backpack-description`)"
+        >
+        <div class="category-holder">
+          <img
+          src="/images/categories/category-backpacks.svg"
+          alt="image of a backpack"
+          sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
+          />
+          <div class="category-description" id="backpack-description">
+            <p>
+              Lightweight and spacious packs built for hiking, camping, and
+              travel. Carry all your essentials with ease and ergonomic
+              support
+            </p>
+          </div>
         </div>
-      </section>
-    </main>
-    <footer id="footer">&copy;NOT a real business</footer>
-  </body>
-  <script src="./js/main.js" type="module"></script>
+        <h3>Backpacks</h3>
+      </a>
+      <a
+      href="/product_listing/?category=sleeping-bags"
+      onmouseenter="displayDescription(`sleeping-bag-description`)"
+      onmouseleave="removeDescription(`sleeping-bag-description`)"
+      >
+      <div class="category-holder">
+        <img
+        src="/images/categories/category-sleepingbags.svg"
+        alt="image of a sleeping-bag"
+        sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
+        />
+        <div class="category-description" id="sleeping-bag-description">
+          <p>
+            Insulated and cozy sleeping solutions for all seasons. Stay
+            warm and comfortable whether you're camping in the summer or
+            braving the winter cold
+          </p>
+        </div>
+      </div>
+      <h3>Sleeping Bags</h3>
+    </a>
+    <a
+    href="/product_listing/?category=hammocks"
+    onmouseenter="displayDescription(`hammock-description`)"
+    onmouseleave="removeDescription(`hammock-description`)"
+    >
+    <div class="category-holder">
+      <img
+      src="/images/categories/category-hammocks.svg"
+      alt="image of a Hammock"
+      sizes="(max-width: 600px) 100px, (max-width: 1200px) 200px, 300px"
+      />
+      <div class="category-description" id="hammock-description">
+        <p>
+          Relax in the great outdoors with sturdy, portable hammocks.
+          Perfect for lounging at the campsite, beach, or backyard
+        </p>
+      </div>
+    </div>
+    <h3>Hammocks</h3>
+  </a>
+</div>
+</section>
+<aside class="newsletter">
+  <div >
+    <form action="#" class="newsletter-form">
+      <h2>Join our Newsletter</h2>
+      <em>Be the first to know about our new products and receive exclusive coupons and discounts!</em> 
+      <br>
+      <div class="user-info">
+        <label>
+          Name
+          <input type="text" name="name" id="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" id="email" required />
+        </label>
+        <br>
+        <button onclick="infoValidation(event)">Subscribe</button>
+      </div>
+    </form>
+  </div>
+</aside>
+</main>
+<footer id="footer">&copy;NOT a real business</footer>
+</body>
+<script src="./js/main.js" type="module"></script>
 </html>
 
 <script>
@@ -131,7 +152,7 @@
     element.style.position = "relative";
     element.style.top = "0";
   }
-
+  
   // remove description in an element
   function removeDescription(elementId) {
     const values = ["1000px", "-1000px"];
@@ -139,5 +160,30 @@
     const element = document.getElementById(elementId);
     element.style.position = "relative";
     element.style.top = value;
+  }
+
+  function infoValidation(event){
+    event.preventDefault();
+
+    const userInfo = document.querySelector('.user-info');
+    const button = event.target;
+    
+    const nameInput = document.querySelector('.newsletter-form #name');
+    const emailInput = document.querySelector('.newsletter-form #email');
+    
+    
+    if (!nameInput.checkValidity()) 
+    {
+      nameInput.reportValidity();
+      return;
+    };
+    
+    if (!emailInput.checkValidity()) 
+    {
+      emailInput.reportValidity();
+      return;
+    }
+    
+    userInfo.innerHTML = `Thanks ${nameInput.value}, you have been successfully subscribed to the SleepOutside Newsletter. Check your email for more information.`
   }
 </script>
