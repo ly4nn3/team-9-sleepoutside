@@ -69,7 +69,8 @@ export default class ProductDetails {
         }
         existingItem.Quantity += 1;
         // update final price
-        existingItem.FinalPrice = existingItem.ListPrice * existingItem.Quantity;
+        existingItem.FinalPrice =
+          existingItem.ListPrice * existingItem.Quantity;
       } else {
         //if duplicate item is not already in cart, then add it with quantity = 1
         const newProduct = { ...this.product, Quantity: 1 };
@@ -98,9 +99,10 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  return `<section class="product-detail"> 
+  return `<section class="product-detail">
     <h3>${product.Brand.Name}</h3>
     <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <div class="discount-label"><span>Discount: -$${(product.SuggestedRetailPrice - product.FinalPrice).toFixed(2)}</span></div> 
     <img
       class="divider"
       src="${product.Images.PrimaryLarge}"

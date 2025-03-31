@@ -118,6 +118,30 @@
           </a>
         </div>
       </section>
+      <aside class="newsletter">
+        <div>
+          <form action="#" class="newsletter-form">
+            <h2>Join our Newsletter</h2>
+            <em
+              >Be the first to know about our new products and receive exclusive
+              coupons and discounts!</em
+            >
+            <br />
+            <div class="user-info">
+              <label>
+                Name
+                <input type="text" name="name" id="name" required />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" id="email" required />
+              </label>
+              <br />
+              <button onclick="infoValidation(event)">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </aside>
     </main>
     <footer id="footer">&copy;NOT a real business</footer>
   </body>
@@ -139,5 +163,27 @@
     const element = document.getElementById(elementId);
     element.style.position = "relative";
     element.style.top = value;
+  }
+
+  function infoValidation(event) {
+    event.preventDefault();
+
+    const userInfo = document.querySelector(".user-info");
+    const button = event.target;
+
+    const nameInput = document.querySelector(".newsletter-form #name");
+    const emailInput = document.querySelector(".newsletter-form #email");
+
+    if (!nameInput.checkValidity()) {
+      nameInput.reportValidity();
+      return;
+    }
+
+    if (!emailInput.checkValidity()) {
+      emailInput.reportValidity();
+      return;
+    }
+
+    userInfo.innerHTML = `Thanks ${nameInput.value}, you have been successfully subscribed to the SleepOutside Newsletter. Check your email for more information.`;
   }
 </script>
