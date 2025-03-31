@@ -18,7 +18,11 @@ export default class Wishlist {
       const wishlistItems = getLocalStorage("so-wishlist") || [];
       this.renderWishlist(wishlistItems);
     } catch (error) {
-      console.error("Error initializing wishlist:", error);
+      alertMessage(
+        "Error loading wishlist. Please refresh the page.",
+        false,
+        3000,
+      );
     }
   }
 
@@ -47,7 +51,11 @@ export default class Wishlist {
         });
       }
     } catch (error) {
-      console.error("Error rendering wishlist:", error);
+      alertMessage(
+        "Error displaying items. Please refresh the page.",
+        false,
+        3000,
+      );
     }
   }
 
@@ -112,7 +120,11 @@ export default class Wishlist {
         alertMessage("Item moved to cart!", false, 2000);
       }
     } catch (error) {
-      console.error("Error moving to cart:", error);
+      alertMessage(
+        "Failed to move item to cart. Please try again.",
+        false,
+        3000,
+      );
     }
   }
 
@@ -136,7 +148,11 @@ export default class Wishlist {
 
       alertMessage("Item removed from wishlist!", false, 2000);
     } catch (error) {
-      console.error("Error removing from wishlist:", error);
+      alertMessage(
+        "Failed to remove item from wishlist. Please try again.",
+        false,
+        3000,
+      );
     }
   }
 }
