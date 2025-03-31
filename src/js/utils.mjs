@@ -241,155 +241,167 @@ export async function animateCart(
   });
 }
 
-export function checkRegex(inputElement, regex, validMsg="Valid", failMsg="Invalid input") {
-    if (regex.test(inputElement.value)) {
-        inputElement.title = validMsg;
-        inputElement.setCustomValidity("");
-        return true;
-    } else {
-        inputElement.setCustomValidity(failMsg);
-        inputElement.focus();
-        inputElement.title = failMsg;
-        return false;
-    }
+export function checkRegex(
+  inputElement,
+  regex,
+  validMsg = "Valid",
+  failMsg = "Invalid input",
+) {
+  if (regex.test(inputElement.value)) {
+    inputElement.title = validMsg;
+    inputElement.setCustomValidity("");
+    return true;
+  } else {
+    inputElement.setCustomValidity(failMsg);
+    inputElement.focus();
+    inputElement.title = failMsg;
+    return false;
+  }
 }
 
-export function alertMessage(message, scroll=true, disapear=5000) {
-    const fixedAlertsHolderId = "#fixed-alerts-holder";  // use for holder non-scrolling alert
+export function alertMessage(message, scroll = true, disapear = 5000) {
+  const fixedAlertsHolderId = "#fixed-alerts-holder"; // use for holder non-scrolling alert
 
-    const alertHolder = document.createElement("div");
-    alertHolder.setAttribute("class", "alertHolder");
+  const alertHolder = document.createElement("div");
+  alertHolder.setAttribute("class", "alertHolder");
 
-    const alertCloseBtn = document.createElement("button");
-    alertCloseBtn.setAttribute("class", "alertCloseBtn");
-    alertCloseBtn.innerHTML = "⨉";
-    alertCloseBtn.addEventListener("click", ()=> {
-      scroll ? document.body.removeChild(alertHolder) : document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
-    })
+  const alertCloseBtn = document.createElement("button");
+  alertCloseBtn.setAttribute("class", "alertCloseBtn");
+  alertCloseBtn.innerHTML = "⨉";
+  alertCloseBtn.addEventListener("click", () => {
+    scroll
+      ? document.body.removeChild(alertHolder)
+      : document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
+  });
 
-    const alertMsgHolder = document.createElement("span");
-    alertMsgHolder.innerHTML = message;
+  const alertMsgHolder = document.createElement("span");
+  alertMsgHolder.innerHTML = message;
 
-    // append elements
-    alertHolder.appendChild(alertMsgHolder);
-    alertHolder.appendChild(alertCloseBtn);
+  // append elements
+  alertHolder.appendChild(alertMsgHolder);
+  alertHolder.appendChild(alertCloseBtn);
 
-    if (scroll) {
-        document.querySelector("main").insertAdjacentElement("beforebegin", alertHolder);
-        window.scrollTo({ top: 0, behavior: "smooth"});
-    } else {
-        document.querySelector(fixedAlertsHolderId).appendChild(alertHolder);
-    }
+  if (scroll) {
+    document
+      .querySelector("main")
+      .insertAdjacentElement("beforebegin", alertHolder);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    document.querySelector(fixedAlertsHolderId).appendChild(alertHolder);
+  }
 
-    // remove error withing some time
-    if (typeof(disapear) == "number" && disapear != null) {
-        setTimeout(() => {
-            const animationTime = 2;
-            alertHolder.style.transition = `opacity ${animationTime}s`;
-            alertHolder.style.opacity = "0";
-            setTimeout(() => {
-              if (scroll) {
-                if (document.body.contains(alertHolder)) document.body.removeChild(alertHolder);
-              } else {
-                if (document.querySelector(fixedAlertsHolderId).contains(alertHolder)) document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
-              }
-            }, animationTime * 1000);
-        }, disapear);
-    }
+  // remove error withing some time
+  if (typeof disapear == "number" && disapear != null) {
+    setTimeout(() => {
+      const animationTime = 2;
+      alertHolder.style.transition = `opacity ${animationTime}s`;
+      alertHolder.style.opacity = "0";
+      setTimeout(() => {
+        if (scroll) {
+          if (document.body.contains(alertHolder))
+            document.body.removeChild(alertHolder);
+        } else {
+          if (document.querySelector(fixedAlertsHolderId).contains(alertHolder))
+            document
+              .querySelector(fixedAlertsHolderId)
+              .removeChild(alertHolder);
+        }
+      }, animationTime * 1000);
+    }, disapear);
+  }
 }
 
-export function removeAllAlert(fixedAlert=true) {
+export function removeAllAlert(fixedAlert = true) {
   const alertHolderClass = ".alertHolder";
-    const fixedAlertsHolderId = "#fixed-alerts-holder";  // use for holder non-scrolling alert
-    document.querySelectorAll(alertHolderClass).forEach(alert => {
-      if (fixedAlert) {
-        document.querySelector(fixedAlertsHolderId).removeChild(alert);
-      } else {
-        document.body.removeChild(alert)
-      }
-    })
+  const fixedAlertsHolderId = "#fixed-alerts-holder"; // use for holder non-scrolling alert
+  document.querySelectorAll(alertHolderClass).forEach((alert) => {
+    if (fixedAlert) {
+      document.querySelector(fixedAlertsHolderId).removeChild(alert);
+    } else {
+      document.body.removeChild(alert);
+    }
+  });
 }
 
 // LARGE DISPLAY POPUP
 export class LargePopUp {
-    constructor() {
-        this.isClosed = true;
-        this.mainFrame = document.createElement("div");
-        this.screen = document.createElement("div");
-        this.closeBtn = document.createElement("button");
+  constructor() {
+    this.isClosed = true;
+    this.mainFrame = document.createElement("div");
+    this.screen = document.createElement("div");
+    this.closeBtn = document.createElement("button");
 
-        this.init();
-    }
+    this.init();
+  }
 
-    init() {
-        // SET ATTRIBUTES
-        this.mainFrame.setAttribute("class", "largePopUpMainFrame");
-        this.screen.setAttribute("class", "largePopUpScreen");
-        this.closeBtn.setAttribute("class", "largePopUpCloseBtn");
-        this.closeBtn.innerHTML = "⨉";
+  init() {
+    // SET ATTRIBUTES
+    this.mainFrame.setAttribute("class", "largePopUpMainFrame");
+    this.screen.setAttribute("class", "largePopUpScreen");
+    this.closeBtn.setAttribute("class", "largePopUpCloseBtn");
+    this.closeBtn.innerHTML = "⨉";
 
-        // SET LISTENERS
-        // close with closeBtn
-        this.closeBtn.addEventListener("click", ()=> {
-            this.close();
-        })
+    // SET LISTENERS
+    // close with closeBtn
+    this.closeBtn.addEventListener("click", () => {
+      this.close();
+    });
 
-        // close with escape key press
-        document.addEventListener("keyup", (event) => {
-            if (event.key == "Escape") {
-                this.close();
-            }
-        })
+    // close with escape key press
+    document.addEventListener("keyup", (event) => {
+      if (event.key == "Escape") {
+        this.close();
+      }
+    });
 
-        // close screen on screen click outside content
-        this.screen.addEventListener("click", (event)=> {
-            if (this.screen.children[0]) {
-                const contentHolder = this.screen.children[0];
-                // get contetHolder boundary
-                const boundary = contentHolder.getBoundingClientRect();
-                const isInBoundry = (
-                  event.clientX >= boundary.left &&
-                  event.clientX <= boundary.right &&
-                  event.clientY >= boundary.top &&
-                  event.clientY <= boundary.bottom
-                );
+    // close screen on screen click outside content
+    this.screen.addEventListener("click", (event) => {
+      if (this.screen.children[0]) {
+        const contentHolder = this.screen.children[0];
+        // get contetHolder boundary
+        const boundary = contentHolder.getBoundingClientRect();
+        const isInBoundry =
+          event.clientX >= boundary.left &&
+          event.clientX <= boundary.right &&
+          event.clientY >= boundary.top &&
+          event.clientY <= boundary.bottom;
 
-                if (!isInBoundry) {
-                    this.close();
-                }
-            }
-        })
-
-        // APPEND ELEMENTS
-        this.mainFrame.appendChild(this.screen);
-        this.mainFrame.appendChild(this.closeBtn);
-    }
-
-    display(htmlElement_or_template) {
-        if (typeof(htmlElement_or_template) == "object") {
-            // add content to screen
-            this.screen.appendChild(htmlElement_or_template);
-        } else {
-            this.screen.innerHTML = htmlElement_or_template
+        if (!isInBoundry) {
+          this.close();
         }
+      }
+    });
 
-        // add main frame to display
-        document.body.prepend(this.mainFrame);
+    // APPEND ELEMENTS
+    this.mainFrame.appendChild(this.screen);
+    this.mainFrame.appendChild(this.closeBtn);
+  }
 
+  display(htmlElement_or_template) {
+    if (typeof htmlElement_or_template == "object") {
+      // add content to screen
+      this.screen.appendChild(htmlElement_or_template);
+    } else {
+      this.screen.innerHTML = htmlElement_or_template;
+    }
+
+    // add main frame to display
+    document.body.prepend(this.mainFrame);
+
+    // update isClosed
+    this.isClosed = false;
+  }
+
+  close() {
+    if (!this.isClosed) {
+      if (document.body.contains(this.mainFrame)) {
+        document.body.removeChild(this.mainFrame);
         // update isClosed
-        this.isClosed = false;
+        this.isClosed = true;
+        return true;
+      }
     }
 
-    close() {
-        if (!this.isClosed) {
-            if (document.body.contains(this.mainFrame)) {
-                document.body.removeChild(this.mainFrame);
-                // update isClosed
-                this.isClosed = true;
-                return true;
-            }
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

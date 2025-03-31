@@ -1,5 +1,10 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { alertMessage, getLocalStorage, removeAllAlert, setLocalStorage } from "./utils.mjs";
+import {
+  alertMessage,
+  getLocalStorage,
+  removeAllAlert,
+  setLocalStorage,
+} from "./utils.mjs";
 
 const services = new ExternalServices();
 
@@ -102,7 +107,7 @@ export default class CheckoutProcess {
       const formData = formDataToJSON(form);
       // assign the correct format of expiration data
       const expiration = formData.expiration;
-      const [year, month] = expiration.split('-').map(Number);
+      const [year, month] = expiration.split("-").map(Number);
       // console.log("Year: ", String(year).slice(-2), "Month: ", month);  // for testing purpose
       formData.expiration = `${month}/${String(year).slice(-2)}`;
       // populate the JSON order object with the order Date, orderTotal, tax, shipping, and list of items
@@ -117,26 +122,28 @@ export default class CheckoutProcess {
         const response = await services.checkout(formData);
         // console.log(response);
         if (response.orderId) {
-            // clear storage
-            setLocalStorage("so-cart", []);
-            // clear form
-            Object.keys(formData).forEach((key) => {
-                if (form.elements[`${key}`]) {
-                  form.elements[`${key}`].value = "";
-                }
-            })
+          // clear storage
+          setLocalStorage("so-cart", []);
+          // clear form
+          Object.keys(formData).forEach((key) => {
+            if (form.elements[`${key}`]) {
+              form.elements[`${key}`].value = "";
+            }
+          });
 
-            const urlParam = encodeURI(`name=${formData.fname}&msg=${response.message}`);
-            open(`../checkout/success.html?${urlParam}`, "_self");
+          const urlParam = encodeURI(
+            `name=${formData.fname}&msg=${response.message}`,
+          );
+          open(`../checkout/success.html?${urlParam}`, "_self");
         }
       } catch (err) {
-        console.error(err);  // for debugging purpose
+        console.error(err); // for debugging purpose
         // remove all previous alerts
         removeAllAlert(true);
         // get adn display error messages
-        Object.values(err.message).forEach(errorMsg => {
-            alertMessage(errorMsg, false);
-        })
+        Object.values(err.message).forEach((errorMsg) => {
+          alertMessage(errorMsg, false);
+        });
       }
     } else {
       console.error("Form not found");

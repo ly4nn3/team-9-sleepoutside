@@ -1,4 +1,11 @@
-import { loadHeaderFooter, getLocalStorage, setLocalStorage, alertMessage, updateWishlistCount, LargePopUp } from "./utils.mjs";
+import {
+  loadHeaderFooter,
+  getLocalStorage,
+  setLocalStorage,
+  alertMessage,
+  updateWishlistCount,
+  LargePopUp,
+} from "./utils.mjs";
 export default class ShoppingCart {
   constructor(productListElement, cartTotalHolder, cartTotalElement) {
     this.productListElement = productListElement;
@@ -37,7 +44,6 @@ export default class ShoppingCart {
       document.querySelectorAll(".add-to-wishlist").forEach((button) => {
         button.addEventListener("click", (event) => this.moveToWishlist(event));
       });
-
     } else {
       // display empty
       this.productListElement.innerHTML = cartEmptyTemplate();
@@ -48,7 +54,7 @@ export default class ShoppingCart {
 
   calculateCartTotal(cartItems) {
     return cartItems
-      .reduce((total, item) => total + (item.FinalPrice), 0)
+      .reduce((total, item) => total + item.FinalPrice, 0)
       .toFixed(2); // change parameter from price to item so it replaces instead of appending and fix decimal to 2 places
   }
 
@@ -82,11 +88,13 @@ export default class ShoppingCart {
     const cart = getLocalStorage("so-cart") || [];
     const wishlist = getLocalStorage("so-wishlist") || [];
 
-    const item = cart.find(item => item.Id === productId);
+    const item = cart.find((item) => item.Id === productId);
     // console.log("Item found:", item);
 
     if (item) {
-      const existingWishListItem = wishlist.find(wishlistItem => wishlistItem.Id === productId);
+      const existingWishListItem = wishlist.find(
+        (wishlistItem) => wishlistItem.Id === productId,
+      );
 
       if (!existingWishListItem) {
         // Add to wishlist
@@ -95,7 +103,7 @@ export default class ShoppingCart {
 
         event.target.textContent = "❤️";
         updateWishlistCount();
-        
+
         // Create and show confirmation popup
         const popup = new LargePopUp();
         const contentElement = document.createElement("div");
@@ -112,16 +120,22 @@ export default class ShoppingCart {
         `;
 
         // Add event listeners
-        contentElement.querySelector('.btn-remove').addEventListener('click', () => {
-          this.removeItemFromCart({ target: { getAttribute: () => productId } });
-          popup.close();
-          alertMessage("Item removed from cart!", false, 2000);
-        });
+        contentElement
+          .querySelector(".btn-remove")
+          .addEventListener("click", () => {
+            this.removeItemFromCart({
+              target: { getAttribute: () => productId },
+            });
+            popup.close();
+            alertMessage("Item removed from cart!", false, 2000);
+          });
 
-        contentElement.querySelector('.btn-cancel').addEventListener('click', () => {
-          popup.close();
-          alertMessage("Item kept in cart!", false, 2000);
-        });
+        contentElement
+          .querySelector(".btn-cancel")
+          .addEventListener("click", () => {
+            popup.close();
+            alertMessage("Item kept in cart!", false, 2000);
+          });
 
         popup.display(contentElement);
         alertMessage("Item added to wishlist!", false, 2000);
@@ -139,10 +153,13 @@ export default class ShoppingCart {
 function cartItemTemplate(item) {
   // wishlist heart state
   const wishlist = getLocalStorage("so-wishlist") || [];
-  const isInWishlist= wishlist.some(wishlistItem => wishlistItem.Id === item.Id);
+  const isInWishlist = wishlist.some(
+    (wishlistItem) => wishlistItem.Id === item.Id,
+  );
   const heartSymbol = isInWishlist ? "❤️" : "🤍";
-  const wishlistClass = isInWishlist ? "add-to-wishlist in-wishlist" : "add-to-wishlist";
-
+  const wishlistClass = isInWishlist
+    ? "add-to-wishlist in-wishlist"
+    : "add-to-wishlist";
 
   return `<li class="cart-card divider" id="${item.Id}">
         <a href="#" class="cart-card__image">
@@ -159,7 +176,7 @@ function cartItemTemplate(item) {
         <div class="cart-card_details">
             <p class="cart-card__quantity">qty:${item.Quantity || 1}</p>
             <p class="cart-card__price">Price: $${item.ListPrice}</p>            
-            <p class="cart-card__price">Total: $${(item.FinalPrice).toFixed(2)}</p>
+            <p class="cart-card__price">Total: $${item.FinalPrice.toFixed(2)}</p>
         </div>
 
         <div class="cart-card__actions">
@@ -167,7 +184,7 @@ function cartItemTemplate(item) {
           <button class="remove-item" data-id="${item.Id}">X</button>    
         </div>     
         </li>`; // ^--created X button next to each item in cart for item removal; adjusted to show actual qty and total price
-        // ^--added wishlist button
+  // ^--added wishlist button
 }
 
 // display empty cart
