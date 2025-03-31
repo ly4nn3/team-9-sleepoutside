@@ -192,52 +192,57 @@ export async function animateCart(
   productImagePath,
 ) {
   return new Promise((resolve, reject) => {
-    const cartAnimate = document.createElement("div");
-    cartAnimate.setAttribute("class", "cartAnimate");
-    cartAnimate.style.zIndex = "2";
-    const image = document.createElement("img");
-    image.src = productImagePath;
-    image.alt = "product image";
-    cartAnimate.appendChild(image);
+    try {
+      const cartAnimate = document.createElement("div");
+      cartAnimate.setAttribute("class", "cartAnimate");
+      cartAnimate.style.zIndex = "2";
+      const image = document.createElement("img");
+      image.src = productImagePath;
+      image.alt = "product image";
+      cartAnimate.appendChild(image);
 
-    const main = document.querySelector("main");
-    main.appendChild(cartAnimate); // add element to document
+      const main = document.querySelector("main"); // add element to document
+      main.appendChild(cartAnimate);
 
-    // console.log("ADD BTN ELEMENT: ", addBtnElement);  // for testing purpose
-    // console.log("CART ELEMENT: ", cartElement);  // for testing purpose
+      // console.log("ADD BTN ELEMENT: ", addBtnElement);  // for testing purpose
+      // console.log("CART ELEMENT: ", cartElement);  // for testing purpose
 
-    // get the position of add to cart btn and cart
-    const addBtnPosition = addBtnElement.getBoundingClientRect();
-    const cartPosition = cartElement.getBoundingClientRect();
+      // get the position of add to cart btn and cart
+      const addBtnPosition = addBtnElement.getBoundingClientRect();
+      const cartPosition = cartElement.getBoundingClientRect();
 
-    // set start postion movement at addBtnPostion
-    cartAnimate.style.position = "absolute";
-    // check screen size
-    if (window.innerWidth > 650) {
-      cartAnimate.style.left = addBtnPosition.left + 90 + "px";
-      cartAnimate.style.top = addBtnPosition.top + 150 + "px";
-    } else {
-      cartAnimate.style.left = addBtnPosition.left + 50 + "px";
-      cartAnimate.style.top = addBtnPosition.top + 180 + "px";
-    }
+      // set start postion movement at addBtnPostion
+      cartAnimate.style.position = "absolute";
+      // check screen size
+      if (window.innerWidth > 650) {
+        cartAnimate.style.left = addBtnPosition.left + 90 + "px";
+        cartAnimate.style.top = addBtnPosition.top + 150 + "px";
+      } else {
+        cartAnimate.style.left = addBtnPosition.left + 50 + "px";
+        cartAnimate.style.top = addBtnPosition.top + 180 + "px";
+      }
 
-    // start smooth transition movement
-    const duration = 3;
-    cartAnimate.style.transition = `transform ${duration}s ease, width .5s, height .5s`;
-    cartAnimate.style.transform = `translate(${cartPosition.left - addBtnPosition.left}px, ${cartPosition.top - addBtnPosition.top}px)`;
+      // start smooth transition movement
+      const duration = 3;
+      cartAnimate.style.transition = `transform ${duration}s ease, width .5s, height .5s`;
+      cartAnimate.style.transform = `translate(${cartPosition.left - addBtnPosition.left}px, ${cartPosition.top - addBtnPosition.top}px)`;
 
-    setTimeout(() => {
-      cartAnimate.style.width = "0";
-      cartAnimate.style.height = "0";
       setTimeout(() => {
-        if (main.removeChild(cartAnimate)) {
-          // remove element;
-          resolve(true);
-        } else {
-          reject(false);
-        }
-      }, 500);
-    }, duration * 400);
+        cartAnimate.style.width = "0";
+        cartAnimate.style.height = "0";
+        setTimeout(() => {
+          if (main.removeChild(cartAnimate)) {
+            // remove element;
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, 500);
+      }, duration * 400);
+    } catch (err) {
+      console.error("Animation error: ", err);
+      resolve(false);
+    }
   });
 }
 
@@ -262,6 +267,12 @@ export function checkRegex(
 export function alertMessage(message, scroll = true, disapear = 5000) {
   const fixedAlertsHolderId = "#fixed-alerts-holder"; // use for holder non-scrolling alert
 
+  let fixedAlertsHolder = document.querySelector(fixedAlertsHolderId);
+  if (!fixedAlertsHolder) {
+    console.warn("Fixed alerts holder not found");
+    return;
+  }
+
   const alertHolder = document.createElement("div");
   alertHolder.setAttribute("class", "alertHolder");
 
@@ -269,9 +280,13 @@ export function alertMessage(message, scroll = true, disapear = 5000) {
   alertCloseBtn.setAttribute("class", "alertCloseBtn");
   alertCloseBtn.innerHTML = "⨉";
   alertCloseBtn.addEventListener("click", () => {
-    scroll
-      ? document.body.removeChild(alertHolder)
-      : document.querySelector(fixedAlertsHolderId).removeChild(alertHolder);
+    if (scroll) {
+      document.body.contains(alertHolder) &&
+        document.body.removeChild(alertHolder);
+    } else {
+      fixedAlertsHolder.contains(alertHolder) &&
+        fixedAlertsHolder.removeChild(alertHolder);
+    }
   });
 
   const alertMsgHolder = document.createElement("span");
@@ -282,12 +297,13 @@ export function alertMessage(message, scroll = true, disapear = 5000) {
   alertHolder.appendChild(alertCloseBtn);
 
   if (scroll) {
-    document
-      .querySelector("main")
-      .insertAdjacentElement("beforebegin", alertHolder);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const main = document.querySelector("main");
+    if (main) {
+      main.insertAdjacentElement("beforebegin", alertHolder);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   } else {
-    document.querySelector(fixedAlertsHolderId).appendChild(alertHolder);
+    fixedAlertsHolder.appendChild(alertHolder);
   }
 
   // remove error withing some time
@@ -298,13 +314,11 @@ export function alertMessage(message, scroll = true, disapear = 5000) {
       alertHolder.style.opacity = "0";
       setTimeout(() => {
         if (scroll) {
-          if (document.body.contains(alertHolder))
+          document.body.contains(alertHolder) &&
             document.body.removeChild(alertHolder);
         } else {
-          if (document.querySelector(fixedAlertsHolderId).contains(alertHolder))
-            document
-              .querySelector(fixedAlertsHolderId)
-              .removeChild(alertHolder);
+          fixedAlertsHolder.contains(alertHolder) &&
+            fixedAlertsHolder.removeChild(alertHolder);
         }
       }, animationTime * 1000);
     }, disapear);

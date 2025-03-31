@@ -14,32 +14,40 @@ export default class Wishlist {
   }
 
   async init() {
-    const wishlistItems = getLocalStorage("so-wishlist") || [];
-    this.renderWishlist(wishlistItems);
+    try {
+      const wishlistItems = getLocalStorage("so-wishlist") || [];
+      this.renderWishlist(wishlistItems);
+    } catch (error) {
+      console.error("Error initializing wishlist:", error);
+    }
   }
 
   renderWishlist(wishlistItems) {
-    if (wishlistItems.length === 0) {
-      this.listElement.innerHTML = `<li class="empty-list">
-                <h2>Your wishlist is empty</h2>
-                <img src="../images/placeholders/wishlist.gif" alt="empty wishlist" width="300px" height="300px" />
-            </li>`;
-      this.footerElement.classList.add("hide");
-    } else {
-      this.listElement.innerHTML = wishlistItems
-        .map((item) => this.wishlistItemTemplate(item))
-        .join("");
-      this.footerElement.classList.remove("hide");
+    try {
+      if (wishlistItems.length === 0) {
+        this.listElement.innerHTML = `<li class="empty-list">
+                    <h2>Your wishlist is empty</h2>
+                    <img src="../images/placeholders/wishlist.gif" alt="empty wishlist" width="300px" height="300px" />
+                </li>`;
+        this.footerElement.classList.add("hide");
+      } else {
+        this.listElement.innerHTML = wishlistItems
+          .map((item) => this.wishlistItemTemplate(item))
+          .join("");
+        this.footerElement.classList.remove("hide");
 
-      document.querySelectorAll(".move-to-cart").forEach((button) => {
-        button.addEventListener("click", (event) => this.moveToCart(event));
-      });
+        document.querySelectorAll(".move-to-cart").forEach((button) => {
+          button.addEventListener("click", (event) => this.moveToCart(event));
+        });
 
-      document.querySelectorAll(".remove-item").forEach((button) => {
-        button.addEventListener("click", (event) =>
-          this.removeFromWishlist(event),
-        );
-      });
+        document.querySelectorAll(".remove-item").forEach((button) => {
+          button.addEventListener("click", (event) =>
+            this.removeFromWishlist(event),
+          );
+        });
+      }
+    } catch (error) {
+      console.error("Error rendering wishlist:", error);
     }
   }
 
@@ -63,49 +71,73 @@ export default class Wishlist {
   }
 
   moveToCart(event) {
-    const productId = event.target.dataset.id;
-    const wishlistItems = getLocalStorage("so-wishlist") || [];
-    const cart = getLocalStorage("so-cart") || [];
+    try {
+      const productId = event.target.dataset.id;
+      const wishlistItems = getLocalStorage("so-wishlist") || [];
+      const cart = getLocalStorage("so-cart") || [];
 
-    const productToMove = wishlistItems.find((item) => item.Id === productId);
-    if (productToMove) {
-      const existingCartItem = cart.find(
-        (cartItem) => cartItem.Id === productId,
-      );
+      const productToMove = wishlistItems.find((item) => item.Id === productId);
+      if (productToMove) {
+        const existingCartItem = cart.find(
+          (cartItem) => cartItem.Id === productId,
+        );
 
-      if (existingCartItem) {
-        // Update quantity if item exists
-        existingCartItem.Quantity = (existingCartItem.Quantity || 1) + 1;
-        existingCartItem.FinalPrice =
-          existingCartItem.ListPrice * existingCartItem.Quantity;
-      } else {
-        cart.push({ ...productToMove, Quantity: 1 });
+        if (existingCartItem) {
+          // Update quantity if item exists
+          existingCartItem.Quantity = (existingCartItem.Quantity || 1) + 1;
+          existingCartItem.FinalPrice =
+            existingCartItem.ListPrice * existingCartItem.Quantity;
+        } else {
+          cart.push({ ...productToMove, Quantity: 1 });
+        }
+
+        setLocalStorage("so-cart", cart);
+
+        const newWishlist = wishlistItems.filter(
+          (item) => item.Id !== productId,
+        );
+        setLocalStorage("so-wishlist", newWishlist);
+
+        updateWishlistCount();
+        updateCartCount();
+
+        this.renderWishlist(newWishlist);
+
+        if (!document.querySelector("#fixed-alerts-holder")) {
+          const alertsHolder = document.createElement("div");
+          alertsHolder.id = "fixed-alerts-holder";
+          document.body.prepend(alertsHolder);
+        }
+
+        alertMessage("Item moved to cart!", false, 2000);
       }
+    } catch (error) {
+      console.error("Error moving to cart:", error);
+    }
+  }
 
-      setLocalStorage("so-cart", cart);
+  removeFromWishlist(event) {
+    try {
+      const productId = event.target.dataset.id;
+      const wishlistItems = getLocalStorage("so-wishlist") || [];
 
       const newWishlist = wishlistItems.filter((item) => item.Id !== productId);
       setLocalStorage("so-wishlist", newWishlist);
 
       updateWishlistCount();
-      updateCartCount();
 
       this.renderWishlist(newWishlist);
-      alertMessage("Item moved to cart!", false, 2000);
+
+      if (!document.querySelector("#fixed-alerts-holder")) {
+        const alertsHolder = document.createElement("div");
+        alertsHolder.id = "fixed-alerts-holder";
+        document.body.prepend(alertsHolder);
+      }
+
+      alertMessage("Item removed from wishlist!", false, 2000);
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
     }
-  }
-
-  removeFromWishlist(event) {
-    const productId = event.target.dataset.id;
-    const wishlistItems = getLocalStorage("so-wishlist") || [];
-
-    const newWishlist = wishlistItems.filter((item) => item.Id !== productId);
-    setLocalStorage("so-wishlist", newWishlist);
-
-    updateWishlistCount();
-
-    this.renderWishlist(newWishlist);
-    alertMessage("Item removed from wishlist!", false, 2000);
   }
 }
 
