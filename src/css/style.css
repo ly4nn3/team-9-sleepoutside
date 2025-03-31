@@ -684,6 +684,7 @@ form input[required]:focus {
   flex-direction: column;
   gap: 0.25rem;
   margin: 0.5rem 0;
+
 }
 
 .cart-footer {
@@ -887,4 +888,14 @@ form input[required]:focus {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+/*CART QUANTITY STYLING*/
+.quantity-input {
+  width: 50px;
+  padding: 4px;
+  font-size: 1em;
+  border: 2px solid var(--secondary-color);
+  border-radius: 5px;
+  margin-bottom: 0.8rem;
 }
